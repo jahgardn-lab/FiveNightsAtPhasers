@@ -6,9 +6,10 @@ class Load extends Phaser.Scene {
     preload() {
         this.load.setPath("./assets/");
 
-        // Load townsfolk
-        //this.load.image("purple", "purple_townie.png");
-        //this.load.image("blue", "blue_townie.png");
+        // load camera button
+        this.load.image("cameraButton", "cameraButton.png");
+        this.load.image("office", "officePlaceholder.png");
+
 
         // Load tilemap information
         //this.load.image("tilemap_tiles", "tilemap_packed.png");                   // Packed tilemap
