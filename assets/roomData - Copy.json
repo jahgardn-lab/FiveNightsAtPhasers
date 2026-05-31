@@ -1,0 +1,23 @@
+{
+    "rooms": {
+
+        "leftHallway": {
+            "connectedRooms": [
+                "office",
+                "rightHallway"
+            ]
+        },
+
+        "rightHallway": {
+            "connectedRooms": [
+                "office",
+                "leftHallway"
+            ]
+        }
+
+
+
+
+
+    }
+}
