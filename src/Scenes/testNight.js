@@ -8,11 +8,16 @@ class TestNight extends Phaser.Scene {
 
     init() {
         this.HAS_WON = false;
-        this.CAM_SHIFT_AMOUNT = 200;
+        this.CAM_SHIFT_AMOUNT = 400;
         this.CAM_SHIFT_SPEED = 15;
         this.hasToggledCams = false;
         this.hasToggledCams_space = false;
         this.camsAreOpen = false;
+
+        this.leftDoorClosed  = false;
+        this.rightDoorClosed = false;
+        this.doorLeftIsMoving = false;
+        this.doorRightIsMoving = false;
     }
 
     create() {
@@ -21,6 +26,51 @@ class TestNight extends Phaser.Scene {
 
         // place office background sprite
         my.sprite.office = this.add.sprite(game.config.width/2, game.config.height/2, "office").setScale(1.8);
+
+        // DORE STUFF //////////////////////////////////////////////////////////////////////////
+
+        // place left door on left side of screen
+        let doorLeft = this.add.sprite(-200, -400, "door").setScale(2);
+
+        // place left door button at left side of screen
+        my.sprite.doorButtonLeft = this.add.sprite(100, 700, "doorButton_open").setScale(0.5).setInteractive();
+
+        // listener for left door button getting clicked
+        my.sprite.doorButtonLeft.on('pointerdown', (pointer) => {
+            // pointer.x and pointer.y gives coordinates of the click
+            
+            if(!this.leftDoorClosed && !this.doorLeftIsMoving) {
+                my.sprite.doorButtonLeft.setTexture("doorButton_closed");
+                // because of this, the door is considered closed the second the player clicks.
+                // if we want to be mean to the player, we could put door is closed inside the tween onComplete
+                // so the door has to be fully closed to count (but that feels pretty mean)
+                this.leftDoorClosed = true;
+                this.doorLeftIsMoving = true;
+                this.tweens.add({
+                    targets: doorLeft,
+                    y: 600,
+                    duration: 500, // Duration in milliseconds
+                    ease: 'Power1', // Easing function
+                    onComplete: () => { this.doorLeftIsMoving = false; }
+                });
+            } else if(this.leftDoorClosed && !this.doorLeftIsMoving) {
+                my.sprite.doorButtonLeft.setTexture("doorButton_open");
+                this.leftDoorClosed = false;
+                this.doorLeftIsMoving = true;
+                this.tweens.add({
+                    targets: doorLeft,
+                    y: -600,
+                    duration: 1000, // Duration in milliseconds
+                    ease: 'Power1', // Easing function
+                    onComplete: () => { this.doorLeftIsMoving = false; }
+                });
+            }
+        });
+
+        // idk why, but whenever I remove this superfluous tween, the door stops working. So stay it shall!
+        //this.tweens.add({ targets: doorLeft, y: -400, duration: 10, ease: 'Linear1', onComplete: () => { this.doorLeftIsMoving = false; } });
+
+        // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
         // create current camera sprite (defaults to one of our choice)
         my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "camera_placeholder").setVisible(false);
@@ -33,7 +83,7 @@ class TestNight extends Phaser.Scene {
         // camera buttons group
         this.camButtons = this.add.group();
 
-                // this.createCamButton(x, y, texture, scale); ref for function
+                // this.createCamButton(x, y, buttonTexture, scale); ref for function
 
         // camera button for left hallway
         let camButton_leftHallway = this.createCamButton(1200, 800, "roomButton", 0.5);
@@ -53,9 +103,9 @@ class TestNight extends Phaser.Scene {
 
         // TEXT STUFF //////////////////////////////////////////////////////////////////////////
 
-        // place clock text in bottom left of screen
+        // place clock text in upper right of screen
         this.clockText = this.add.text(1880, 80, "12:00", { font: '64px Courier', fill: '#ff0000' }).setOrigin(1, 1);
-        //this.clockText.depth = -9998;
+
         // place Night Label text
         this.nightLabel = this.add.text(1880, 140, "TEST NIGHT", { font: '48px Courier', fill: '#ff0000' }).setOrigin(1, 1);        
 
@@ -85,7 +135,7 @@ class TestNight extends Phaser.Scene {
         let elapsedSeconds = Math.floor(this.nightTimer.getElapsedSeconds());
         // variable to hold elapsed minutes
         let elapsedMinutes = Math.floor(elapsedSeconds/60);
-        // mouse pointer tracker - remember! mouse pos is in pixels
+        // mouse pointer tracker - remember: mouse pos is in pixels
         let pointer = this.input.activePointer;
         // current scroll position of camera
         let shiftPos = this.cameras.main.scrollX;
@@ -108,29 +158,27 @@ class TestNight extends Phaser.Scene {
         let spM = elapsedSeconds % 60; // seconds per minute
         if(elapsedMinutes == 0) {
             if(spM < 10) { this.clockText.setText("12:0" + spM); }
-            else { this.clockText.setText("12:" + spM); }
+                    else { this.clockText.setText("12:" + spM); }
         } else {
-            if(spM < 10) {this.clockText.setText(" " + elapsedMinutes+":0" + spM); }
-            else { this.clockText.setText(" " + elapsedMinutes + ":" + spM); }
+            if(spM < 10) { this.clockText.setText(" " + elapsedMinutes+":0" + spM); }
+                    else { this.clockText.setText(" " + elapsedMinutes + ":" + spM); }
         }
         
         // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
         // if mouse is hovering over bottom center of screen and the cams haven't been toggled, toggle cams
-        /* note to anyone looking at this; YES I could have used the built in sprite hovering
+        /* note to anyone looking at this; YES I could have used the built in sprite hovering detection
         from the mouse pointer, but it was being super finnicky, so hard coding it is :) */
         if((pointer.x > 400 && pointer.x < 1520 && pointer.y > 950 && !this.hasToggledCams) || (this.spaceKey.isDown && !this.hasToggledCams_space)) {
 
             // if cams are open, close them
             if(this.camsAreOpen) {
-
-                // TODO: implement camera closing logic
+                // make camera screen invisible
                 my.sprite.curCam.visible = false;
                 // toggle current cam state
                 this.camsAreOpen = false;
             } else { // otherwise, open them
-
-                // TODO: implement camera opening logic
+                // make camera screen visible 
                 my.sprite.curCam.visible = true;
                 // toggle current cam state
                 this.camsAreOpen = true;
@@ -141,6 +189,7 @@ class TestNight extends Phaser.Scene {
             // set camera toggle (prevents multi triggering)
             this.hasToggledCams = true;
             // THIS IS BEING IMPLEMENTED IN A GROSS MANNER SPECIFICALLY FOR JADE; GOT A PROBLEM WITH IT? BRING IT UP WITH HER.
+            // if the space bar was pressed, set camera space toggle
             if(this.spaceKey.isDown) { this.hasToggledCams_space = true;}
         // if mouse is not hovering over button, and camera toggle hasn't been reset, do so now
         } else if(((pointer.x < 400 || pointer.x > 1520 || pointer.y < 950) && this.hasToggledCams) || (!this.spaceKey.isDown && this.hasToggledCams_space))

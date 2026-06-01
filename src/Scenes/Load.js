@@ -13,6 +13,13 @@ class Load extends Phaser.Scene {
         // load office sprite
         this.load.image("office", "officePlaceholder.png");
         
+        // load door button sprites
+        this.load.image("doorButton_closed", "doorButton_closed.png");
+        this.load.image("doorButton_open", "doorButton_open.png");
+
+        // load door sprite
+        this.load.image("door", "DORE.png");
+
         // load default camera image
         this.load.image("camera_placeholder", "camera_placeholder.png");
 
