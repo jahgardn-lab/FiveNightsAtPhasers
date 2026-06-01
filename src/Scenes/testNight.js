@@ -59,7 +59,7 @@ class TestNight extends Phaser.Scene {
                 this.doorLeftIsMoving = true;
                 this.tweens.add({
                     targets: doorLeft,
-                    y: -600,
+                    y: -400,
                     duration: 1000, // Duration in milliseconds
                     ease: 'Power1', // Easing function
                     onComplete: () => { this.doorLeftIsMoving = false; }
