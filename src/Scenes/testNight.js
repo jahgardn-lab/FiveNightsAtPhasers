@@ -27,7 +27,7 @@ class TestNight extends Phaser.Scene {
         // place office background sprite
         my.sprite.office = this.add.sprite(game.config.width/2, game.config.height/2, "office").setScale(1.8);
 
-        // DORE STUFF //////////////////////////////////////////////////////////////////////////
+        // LEFT DORE STUFF /////////////////////////////////////////////////////////////////////
 
         // place left door on left side of screen
         let doorLeft = this.add.sprite(-200, -400, "door").setScale(2);
@@ -67,7 +67,47 @@ class TestNight extends Phaser.Scene {
             }
         });
 
-        // idk why, but whenever I remove this superfluous tween, the door stops working. So stay it shall!
+        // RIGHT DORE STUFF ////////////////////////////////////////////////////////////////////
+
+        // place right door on right side of screen
+        let doorRight = this.add.sprite(2120, -400, "door").setScale(2).setFlipX(true);
+
+        // place right door button at right side of screen
+        my.sprite.doorButtonRight = this.add.sprite(1820, 700, "doorButton_open").setScale(0.5).setInteractive();
+
+        // listener for right door button getting clicked
+        my.sprite.doorButtonRight.on('pointerdown', (pointer) => {
+            // pointer.x and pointer.y gives coordinates of the click
+            
+            if(!this.rightDoorClosed && !this.doorRightIsMoving) {
+                my.sprite.doorButtonRight.setTexture("doorButton_closed");
+                // because of this, the door is considered closed the second the player clicks.
+                // if we want to be mean to the player, we could put door is closed inside the tween onComplete
+                // so the door has to be fully closed to count (but that feels pretty mean)
+                this.rightDoorClosed = true;
+                this.doorRightIsMoving = true;
+                this.tweens.add({
+                    targets: doorRight,
+                    y: 600,
+                    duration: 500, // Duration in milliseconds
+                    ease: 'Power1', // Easing function
+                    onComplete: () => { this.doorRightIsMoving = false; }
+                });
+            } else if(this.rightDoorClosed && !this.doorRightIsMoving) {
+                my.sprite.doorButtonRight.setTexture("doorButton_open");
+                this.rightDoorClosed = false;
+                this.doorRightIsMoving = true;
+                this.tweens.add({
+                    targets: doorRight,
+                    y: -400,
+                    duration: 1000, // Duration in milliseconds
+                    ease: 'Power1', // Easing function
+                    onComplete: () => { this.doorRightIsMoving = false; }
+                });
+            }
+        });
+
+        // idk why, but whenever I remove this superfluous tween, the door stops working. So stay it shall! nvm it fixed itself god damnit >:(
         //this.tweens.add({ targets: doorLeft, y: -400, duration: 10, ease: 'Linear1', onComplete: () => { this.doorLeftIsMoving = false; } });
 
         // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
@@ -85,8 +125,24 @@ class TestNight extends Phaser.Scene {
 
                 // this.createCamButton(x, y, buttonTexture, scale); ref for function
 
+        // camera button for left hallway corner
+        let camButton_leftHallwayCorner = this.createCamButton(1550, 900, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_leftHallwayCorner.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("hallwayCorner_left");
+        });
+
+        // camera button for right hallway
+        let camButton_rightHallwayCorner = this.createCamButton(1700, 900, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_rightHallwayCorner.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("hallwayCorner_right");
+        });
+
         // camera button for left hallway
-        let camButton_leftHallway = this.createCamButton(1200, 800, "roomButton", 0.5);
+        let camButton_leftHallway = this.createCamButton(1550, 800, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_leftHallway.on('pointerdown', function (pointer) {
             // pointer.x and pointer.y gives coordinates of the click
@@ -94,12 +150,71 @@ class TestNight extends Phaser.Scene {
         });
 
         // camera button for right hallway
-        let camButton_rightHallway = this.createCamButton(1300, 800, "roomButton", 0.5);
+        let camButton_rightHallway = this.createCamButton(1700, 800, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_rightHallway.on('pointerdown', function (pointer) {
             // pointer.x and pointer.y gives coordinates of the click
             my.sprite.curCam.setTexture("hallway_right");
         });
+
+        // camera button for right hallway
+        let camButton_goldenFreddyCloset = this.createCamButton(1400, 750, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_goldenFreddyCloset.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("goldenFreddyCloset_left");
+        });
+
+        // camera button for right hallway
+        let camButton_idkLMAO = this.createCamButton(1850, 750, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_idkLMAO.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("idkLMAO_right");
+        });
+
+        // camera button for right hallway
+        let camButton_pirateCove = this.createCamButton(1500, 650, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_pirateCove.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("pirateCove_left");
+        });
+
+        // camera button for right hallway
+        let camButton_backroom = this.createCamButton(1400, 550, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_backroom.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("backRoom_left");
+        });
+
+        // camera button for right hallway
+        let camButton_kitchen = this.createCamButton(1860, 550, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_kitchen.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("kitchen_right");
+        });
+
+        // camera button for right hallway
+        let camButton_mainHall = this.createCamButton(1600, 550, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_mainHall.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("mainRoom_center");
+        });
+
+        // camera button for right hallway
+        let camButton_mainStage = this.createCamButton(1650, 450, "roomButton", 0.4);
+        // listener for camera button getting clicked
+        camButton_mainStage.on('pointerdown', function (pointer) {
+            // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.curCam.setTexture("mainStage_center");
+        });
+
+
+
 
         // TEXT STUFF //////////////////////////////////////////////////////////////////////////
 

@@ -25,9 +25,21 @@ class Load extends Phaser.Scene {
 
         // THE GREAT CAMERA BACKGROUND DUMP
         this.load.image("hallway_right", "hallway_right.png");
-        this.load.image("hallway_left", "hallway_left.png");        
+        this.load.image("hallway_left", "hallway_left.png");
 
+        this.load.image("hallwayCorner_left", "hallwayCorner_left.png");       
+        this.load.image("hallwayCorner_right", "hallwayCorner_right.png");       
 
+        this.load.image("goldenFreddyCloset_left", "goldenFreddyCloset_left.png");       
+        this.load.image("idkLMAO_right", "idkLMAO_right.png");       
+
+        this.load.image("pirateCove_left", "pirateCove_left.png");       
+
+        this.load.image("backRoom_left", "backRoom_left.png");       
+        this.load.image("kitchen_right", "kitchen_right.png");      
+
+        this.load.image("mainRoom_center", "mainRoom_center.png");       
+        this.load.image("mainStage_center", "mainStage_center.png");       
 
 
         // load rooms json file
