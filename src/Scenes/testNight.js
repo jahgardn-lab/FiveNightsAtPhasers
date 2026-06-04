@@ -118,7 +118,7 @@ class TestNight extends Phaser.Scene {
         // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
         // create current camera sprite (defaults to one of our choice)
-        my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "camera_placeholder").setVisible(false);
+        my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "mainStage_center").setVisible(false);
 
         // place camera button at bottom of screen
         my.sprite.camButton = this.add.sprite(960, 1000, "cameraButton").setScale(1.5, 0.5).setAlpha(0.3);
