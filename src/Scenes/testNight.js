@@ -121,6 +121,11 @@ class TestNight extends Phaser.Scene {
         // create current camera sprite (defaults to one of our choice)
         my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "mainStage").setVisible(false);
 
+        // theoretically, camera enemy needs to be put here (in terms of depth)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
+       //Making separate array for editing convincing temporarily
+       this.bernardPath = ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"]
+        my.sprite.bernard = new Enemies(this, 3, false, this.bernardPath, game.config.width/2, game.config.width/2, "bernardSprite").setScale(0.5);
         // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
         // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
@@ -329,6 +334,9 @@ class TestNight extends Phaser.Scene {
         if(pointer.x > 1720 && this.shiftPos < this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
             this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; burger = 1;
         }
+
+
+        my.sprite.bernard.update(this.camsAreOpen, my.sprite.curCam.texture.key, elapsedMinutes);
 
         // if power is on, do normal game loop
         if(!this.powerIsOut) {
