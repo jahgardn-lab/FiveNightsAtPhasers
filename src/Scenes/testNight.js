@@ -29,6 +29,8 @@ class TestNight extends Phaser.Scene {
         // access var that lets us read the room data
         this.roomD = this.cache.json.get('roomData');
 
+        console.log(this.roomD.leftHallway.bernard.pos.x);
+
         // place left door on left side of screen
         my.sprite.doorLeft = this.add.sprite(960, -500, "door").setScale(1);
 
@@ -121,6 +123,9 @@ class TestNight extends Phaser.Scene {
         my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "mainStage_center").setVisible(false);
 
         // theoretically, camera enemy needs to be put here (in terms of depth)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
+        my.sprite.bernard = new Enemies(this, 3, false, ["mainStage", "backStage", "mainHall", "leftHallway", "leftHallwayCorner"], game.config.width/2, game.config.width/2, "camMap");
+
 
         my.sprite.camFilter = this.add.sprite(game.config.width/2, game.config.height/2, "cameraFilter").setAlpha(0.1).setVisible(false);
 

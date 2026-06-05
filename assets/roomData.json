@@ -1,25 +1,12 @@
 {
-    "rooms": [
+    "leftHallway": {
 
-        {
-            "name": "leftHallway",
-            "connectedRooms": [
-                "office",
-                "rightHallway"
-            ]
-        },
+        "bernard": {
+            "pos": { "x": 0, "y": 0},
+            "scale": { "x": 0, "y": 0}
+        }           
+        
 
-        {
-            "name": "rightHallway",
-            "connectedRooms": [
-                "office",
-                "leftHallway"
-            ]
-        }
+    }
 
-
-
-
-
-    ]
 }
