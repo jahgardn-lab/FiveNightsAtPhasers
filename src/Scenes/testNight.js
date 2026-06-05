@@ -120,6 +120,12 @@ class TestNight extends Phaser.Scene {
         // create current camera sprite (defaults to one of our choice)
         my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "mainStage_center").setVisible(false);
 
+        // theoretically, camera enemy needs to be put here (in terms of depth)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        my.sprite.camFilter = this.add.sprite(game.config.width/2, game.config.height/2, "cameraFilter").setAlpha(0.1).setVisible(false);
+
+        my.sprite.camMap = this.add.sprite(game.config.width/2, game.config.height/2, "camMap").setScale(1.1).setVisible(false);
+
         // place camera button at bottom of screen
         my.sprite.camButton = this.add.sprite(960, 1000, "cameraButton").setScale(1.5, 0.5).setAlpha(0.3);
 
@@ -130,11 +136,18 @@ class TestNight extends Phaser.Scene {
 
                 // this.createCamButton(x, y, buttonTexture, scale); ref for function
 
+
+        my.sprite.activeCam;
+
+
         // camera button for left hallway corner
         let camButton_leftHallwayCorner = this.createCamButton(1550, 900, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_leftHallwayCorner.on('pointerdown', function (pointer) {
             // pointer.x and pointer.y gives coordinates of the click
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_leftHallwayCorner;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("hallwayCorner_left");
         });
 
@@ -142,6 +155,9 @@ class TestNight extends Phaser.Scene {
         let camButton_rightHallwayCorner = this.createCamButton(1700, 900, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_rightHallwayCorner.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_rightHallwayCorner;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("hallwayCorner_right");
         });
 
@@ -149,6 +165,9 @@ class TestNight extends Phaser.Scene {
         let camButton_leftHallway = this.createCamButton(1550, 800, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_leftHallway.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_leftHallway;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("hallway_left");
         });
 
@@ -156,6 +175,9 @@ class TestNight extends Phaser.Scene {
         let camButton_rightHallway = this.createCamButton(1700, 800, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_rightHallway.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_rightHallway;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("hallway_right");
         });
 
@@ -163,20 +185,29 @@ class TestNight extends Phaser.Scene {
         let camButton_goldenFreddyCloset = this.createCamButton(1400, 750, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_goldenFreddyCloset.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_goldenFreddyCloset;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("goldenFreddyCloset_left");
         });
 
         // camera button for right hallway
-        let camButton_idkLMAO = this.createCamButton(1850, 750, "roomButton", 0.4);
+        let camButton_arcade = this.createCamButton(1850, 750, "roomButton", 0.4);
         // listener for camera button getting clicked
-        camButton_idkLMAO.on('pointerdown', function (pointer) {
-            my.sprite.curCam.setTexture("idkLMAO_right");
+        camButton_arcade.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_arcade;
+            my.sprite.activeCam.setTexture("roomButton_active");
+            my.sprite.curCam.setTexture("arcade");
         });
 
         // camera button for right hallway
         let camButton_pirateCove = this.createCamButton(1500, 650, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_pirateCove.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_pirateCove;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("pirateCove_left");
         });
 
@@ -184,6 +215,9 @@ class TestNight extends Phaser.Scene {
         let camButton_backroom = this.createCamButton(1400, 550, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_backroom.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_backroom;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("backRoom_left");
         });
 
@@ -191,6 +225,9 @@ class TestNight extends Phaser.Scene {
         let camButton_kitchen = this.createCamButton(1860, 550, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_kitchen.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_kitchen;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("kitchen_right");
         });
 
@@ -198,13 +235,20 @@ class TestNight extends Phaser.Scene {
         let camButton_mainHall = this.createCamButton(1600, 550, "roomButton", 0.4);
         // listener for camera button getting clicked
         camButton_mainHall.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_mainHall;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("mainRoom_center");
         });
 
         // camera button for right hallway
-        let camButton_mainStage = this.createCamButton(1650, 450, "roomButton", 0.4);
+        let camButton_mainStage = this.createCamButton(1650, 450, "roomButton_active", 0.4);
+        my.sprite.activeCam = camButton_mainStage;
         // listener for camera button getting clicked
         camButton_mainStage.on('pointerdown', function (pointer) {
+            my.sprite.activeCam.setTexture("roomButton");
+            my.sprite.activeCam = camButton_mainStage;
+            my.sprite.activeCam.setTexture("roomButton_active");
             my.sprite.curCam.setTexture("mainStage_center");
         });
 
@@ -241,7 +285,7 @@ class TestNight extends Phaser.Scene {
             loop: true, // does the timer loop (no lmao) (could be used for animatronic ai timers)
             repeat: 0, // how many times does timer repeat
             startAt: 0, // sets amount of first timer to skip in milliseconds
-            timeScale: 1, // time scale (1 is normal)
+            timeScale: 100, // time scale (1 is normal)
             paused: false, // do I need to freaking tell you >:(
         });
 
@@ -314,11 +358,15 @@ class TestNight extends Phaser.Scene {
                 if(this.camsAreOpen) {
                     // make camera screen invisible
                     my.sprite.curCam.visible = false;
+                    my.sprite.camFilter.visible = false;
+                    my.sprite.camMap.visible = false;
                     // toggle current cam state
                     this.camsAreOpen = false;
                 } else { // otherwise, open them
                     // make camera screen visible 
                     my.sprite.curCam.visible = true;
+                    my.sprite.camFilter.visible = true;
+                    my.sprite.camMap.visible = true;
                     // toggle current cam state
                     this.camsAreOpen = true;
                 }
@@ -341,6 +389,8 @@ class TestNight extends Phaser.Scene {
             this.nightLabel.setPosition(1880 + shiftPos + (this.CAM_SHIFT_SPEED * burger), this.nightLabel.y);
             this.powerLabel.setPosition(1880 + shiftPos + (this.CAM_SHIFT_SPEED * burger), this.powerLabel.y);
             my.sprite.curCam.setPosition(960 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
+            my.sprite.camFilter.setPosition(960 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
+            my.sprite.camMap.setPosition(1625 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 680);
             my.sprite.camButton.setPosition(960 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 1000);
 
             // CAMERA BUTTONS //////////////////////////////////////////////////////////////////////
@@ -409,12 +459,14 @@ class TestNight extends Phaser.Scene {
             if(this.camsAreOpen) {
                     // make camera screen invisible
                     my.sprite.curCam.visible = false;
+                    my.sprite.camFilter.visible = false;
+                    my.sprite.camMap.visible = false;
                     // toggle current cam state
                     this.camsAreOpen = false;
             }
 
             // next open the doors if they're closed
-            if(this.rightDoorClosed && !this.doorRightIsMoving) {
+            if(this.rightDoorClosed) {
                 my.sprite.doorButtonRight.setTexture("doorButton_open");
                 this.rightDoorClosed = false;
                 this.doorRightIsMoving = true;
@@ -427,7 +479,7 @@ class TestNight extends Phaser.Scene {
                 });
             }
 
-            if(this.leftDoorClosed && !this.doorLeftIsMoving) {
+            if(this.leftDoorClosed) {
                 my.sprite.doorButtonLeft.setTexture("doorButton_open");
                 this.leftDoorClosed = false;
                 this.doorLeftIsMoving = true;

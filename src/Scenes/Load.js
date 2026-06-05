@@ -10,6 +10,7 @@ class Load extends Phaser.Scene {
         this.load.image("cameraButton", "cameraButton.png");
         // camera location buttons
         this.load.image("roomButton", "roomsButtons.png");
+        this.load.image("roomButton_active", "roomsButtons_active.png");
         // load office sprites
         this.load.image("office", "office.png");
         this.load.image("office_blackout", "office_blackout.png");
@@ -32,16 +33,20 @@ class Load extends Phaser.Scene {
         this.load.image("hallwayCorner_left", "hallwayCorner_left.png");       
         this.load.image("hallwayCorner_right", "hallwayCorner_right.png");       
 
-        this.load.image("goldenFreddyCloset_left", "goldenFreddyCloset_left.png");       
-        this.load.image("idkLMAO_right", "idkLMAO_right.png");       
+        this.load.image("goldenFreddyCloset_left", "freddyCloset.png");       
+        this.load.image("arcade", "arcade.png");       
 
-        this.load.image("pirateCove_left", "pirateCove_left.png");       
+        this.load.image("pirateCove_left", "pirateCove_0.png");       
 
-        this.load.image("backRoom_left", "backRoom_left.png");       
-        this.load.image("kitchen_right", "kitchen_right.png");      
+        this.load.image("backRoom_left", "backRoom.png");       
+        this.load.image("kitchen_right", "kitchen.png");      
 
-        this.load.image("mainRoom_center", "mainRoom_center.png");       
-        this.load.image("mainStage_center", "mainStage_center.png");       
+        this.load.image("mainRoom_center", "mainHall.png");       
+        this.load.image("mainStage_center", "mainStage.png");       
+
+        // load camera stripe pattern
+        this.load.image("cameraFilter", "camera_Stripes.png");
+        this.load.image("camMap", "camMap.png");
 
 
         // load rooms json file
