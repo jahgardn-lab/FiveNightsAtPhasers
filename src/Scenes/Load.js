@@ -30,8 +30,8 @@ class Load extends Phaser.Scene {
         this.load.image("hallway_right", "hallway_right.png");
         this.load.image("hallwayCorner_right", "hallwayCorner_right.png");       
         
-        this.load.image("hallway_left", "hallway_left.png");
-        this.load.image("hallwayCorner_left", "hallwayCorner_left.png");       
+        this.load.image("leftHallway", "hallway_left.png");
+        this.load.image("leftHallwayCorner", "hallwayCorner_left.png");       
 
         this.load.image("goldenFreddyCloset", "freddyCloset.png");       
         this.load.image("arcade", "arcade.png");       

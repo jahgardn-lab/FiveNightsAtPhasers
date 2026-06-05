@@ -8,7 +8,7 @@ class TestNight extends Phaser.Scene {
 
     init() {
         this.HAS_WON = false;
-        this.CAM_SHIFT_AMOUNT = 400;
+        this.CAM_SHIFT_AMOUNT = 390;
         this.CAM_SHIFT_SPEED = 15;
         this.MAX_POWER = 1000;
 
@@ -126,12 +126,26 @@ class TestNight extends Phaser.Scene {
         // theoretically, camera enemy needs to be put here (in terms of depth)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
        //Making separate array for editing convincing temporarily
-       this.bernardPath = ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"]
-        my.sprite.bernard = new Enemies(this, 3, false, this.bernardPath, game.config.width/2, game.config.width/2, "bernardSprite").setScale(0.5);
+       //this.bernardPath = ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"]
+        //my.sprite.bernard = new Enemies(this, 3, false, this.bernardPath, game.config.width/2, game.config.width/2, "bernardSprite");
+        // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
+        // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
+       
+        my.sprite.bernard = new Enemies(this, 20, false, ["mainStage", "backRoom", "mainRoom", "leftHallway", "leftHallwayCorner"], -150, 540, "bernard");
+        this.bernardTimer = 1.0;
+
+        // testing accessing enemy stuff
+        //let bernardTest = my.sprite.bernard.movement[3];
+        //let bernardTest = "leftHallway";
+
+        //console.log(this.roomD.leftHallway.bernard.pos.x);
+        //console.log(this.roomD[bernardTest].bernard.pos.x);
+
+        // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
         my.sprite.camFilter = this.add.sprite(game.config.width/2, game.config.height/2, "cameraFilter").setAlpha(0.1).setVisible(false);
-
+        my.sprite.camFilter.depth = 2;
         my.sprite.camMap = this.add.sprite(game.config.width/2, game.config.height/2, "camMap").setScale(1.1).setVisible(false);
 
         // place camera button at bottom of screen
@@ -154,7 +168,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallwayCorner;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("hallwayCorner_left");
+            my.sprite.curCam.setTexture("leftHallwayCorner");
         });
 
         // camera button for right hallway
@@ -174,7 +188,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallway;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("hallway_left");
+            my.sprite.curCam.setTexture("leftHallway");
         });
 
         // camera button for right hallway
@@ -324,20 +338,17 @@ class TestNight extends Phaser.Scene {
             this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; burger = 1;
         }
 
-
-        my.sprite.bernard.update(this.camsAreOpen, my.sprite.curCam.texture.key, elapsedMinutes);
-        my.sprite.phaser.update(this.camsAreOpen, my.sprite.curCam.texture.key, elapsedMinutes);
-
         // if power is on, do normal game loop
         if(!this.powerIsOut) {
 
             // ENEMY LOGIC /////////////////////////////////////////////////////////////////////////
 
-            this.updateEnemyCameraAppearance(my.sprite.bernard, this.shiftPos);
-            my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes);
-            // every other second, plus the offset
+            // place enemy in cams unless at door
+            if(my.sprite.bernard.attackState == false) { my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos); console.log("BURGER"); }
+            
+            // every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
-                my.sprite.bernard.moveEnemy(this.camsAreOpen);
+                my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
                 this.bernardTimer = 1.0;
             } else { this.bernardTimer -= dTime; }
 
@@ -538,29 +549,5 @@ class TestNight extends Phaser.Scene {
         newGroupMember.setScale(scale); // set scale of sprite
         newGroupMember.setVisible(false);
         return newGroupMember; // return new button
-    }
-
-    updateEnemyCameraAppearance(enemy, shiftPos) {
-        let curLocation = enemy.position;
-        //let curLocation = enemy.movement[enemy.index];
-        // this.roomD[curLocation].bernard.pos.x
-
-        //console.log(curLocation + my.sprite.curCam.texture.key);
-
-        // if the camera is on the right tile
-        if(my.sprite.curCam.texture.key == curLocation && this.camsAreOpen)
-        {
-            enemy.x = this.roomD[curLocation].bernard.pos.x + shiftPos;
-            enemy.y = this.roomD[curLocation].bernard.pos.y;
-            enemy.setScale(this.roomD[curLocation].bernard.scale.x, this.roomD[curLocation].bernard.scale.y);
-
-            //enemy.setVisible(true);
-        }
-        else
-        {
-            //enemy.setVisible(false);
-        }
-
-        //if(enemy.attackState == true){enemy.setVisible(false);}
     }
 }
