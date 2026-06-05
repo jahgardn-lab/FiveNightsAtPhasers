@@ -49,12 +49,14 @@ class Load extends Phaser.Scene {
         this.load.image("camMap", "camMap.png");
 
         // load enemy sprites
-        this.load.image("bernardSprite", "jade.png")
+        this.load.image("dylanSprite", "jade.png");
+        this.load.image("bernardSprite", "jade.png");
+        this.load.image("phaserSprite", "phaserPlaceholder.jpg")
 
 
         // load rooms json file
         this.load.json('roomData', 'roomData.json');
-        this.load.json("enemiesNightOne", "enemiesNightOne.json");
+        this.load.json("enemiesNight1", "enemiesNightOne.json");
     }
 
     create() {

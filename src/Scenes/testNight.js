@@ -28,8 +28,12 @@ class TestNight extends Phaser.Scene {
     create() {
         // access var that lets us read the room data
         this.roomD = this.cache.json.get('roomData');
-
+        this.enemiesInfo = this.cache.json.get("enemiesNight1");
+        
+        console.log(this.enemiesInfo.Chillin.sprite);
         console.log(this.roomD.leftHallway.bernard.pos.x);
+
+        let enemy = this.enemiesInfo;
 
         // place left door on left side of screen
         my.sprite.doorLeft = this.add.sprite(960, -500, "door").setScale(1);
@@ -124,10 +128,8 @@ class TestNight extends Phaser.Scene {
 
         // theoretically, camera enemy needs to be put here (in terms of depth)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
-       //Making separate array for editing convincing temporarily
-       this.bernardPath = ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"]
-        my.sprite.bernard = new Enemies(this, 3, false, this.bernardPath, game.config.width/2, game.config.width/2, "bernardSprite").setScale(0.5);
-
+        my.sprite.bernard = new Enemies(this, enemy.Bernard.level, enemy.Bernard.camera, enemy.Bernard.movement, enemy.Bernard.x, enemy.Bernard.y, enemy.Bernard.sprite).setScale(0.5);
+        my.sprite.phaser = new Enemies(this, enemy.Phaser.level, enemy.Phaser.camera, enemy.Phaser.movement, enemy.Phaser.x, enemy.Phaser.y, enemy.Phaser.sprite).setScale(0.5);
 
         my.sprite.camFilter = this.add.sprite(game.config.width/2, game.config.height/2, "cameraFilter").setAlpha(0.1).setVisible(false);
 
@@ -328,6 +330,7 @@ class TestNight extends Phaser.Scene {
 
 
         my.sprite.bernard.update(this.camsAreOpen, my.sprite.curCam.texture.key, elapsedMinutes);
+        my.sprite.phaser.update(this.camsAreOpen, my.sprite.curCam.texture.key, elapsedMinutes);
 
         // if power is on, do normal game loop
         if(!this.powerIsOut) {
