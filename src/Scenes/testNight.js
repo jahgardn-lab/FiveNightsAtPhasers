@@ -23,13 +23,13 @@ class TestNight extends Phaser.Scene {
         this.rightDoorClosed = false;
         this.doorLeftIsMoving = false;
         this.doorRightIsMoving = false;
+
+        this.shiftPos = 0;
     }
 
     create() {
         // access var that lets us read the room data
         this.roomD = this.cache.json.get('roomData');
-
-        console.log(this.roomD.leftHallway.bernard.pos.x);
 
         // place left door on left side of screen
         my.sprite.doorLeft = this.add.sprite(960, -500, "door").setScale(1);
@@ -117,17 +117,29 @@ class TestNight extends Phaser.Scene {
         // idk why, but whenever I remove this superfluous tween, the door stops working. So stay it shall! nvm it fixed itself god damnit >:(
         //this.tweens.add({ targets: my.sprite.doorLeft, y: -400, duration: 10, ease: 'Linear1', onComplete: () => { this.doorLeftIsMoving = false; } });
 
-        // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
         // create current camera sprite (defaults to one of our choice)
-        my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "mainStage_center").setVisible(false);
+        my.sprite.curCam = this.add.sprite(game.config.width/2, game.config.height/2, "mainStage").setVisible(false);
 
         // theoretically, camera enemy needs to be put here (in terms of depth)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
        //Making separate array for editing convincing temporarily
        this.bernardPath = ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"]
         my.sprite.bernard = new Enemies(this, 3, false, this.bernardPath, game.config.width/2, game.config.width/2, "bernardSprite").setScale(0.5);
+        // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
+        // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
+       
+        my.sprite.bernard = new Enemies(this, 1, false, ["mainStage", "backRoom", "mainRoom", "leftHallway", "leftHallwayCorner"], game.config.width/2, game.config.height/2, "bernard");
+        this.bernardTimer = 1.0;
+        // testing accessing enemy stuff
+        //let bernardTest = my.sprite.bernard.movement[3];
+        //let bernardTest = "leftHallway";
+
+        //console.log(this.roomD.leftHallway.bernard.pos.x);
+        //console.log(this.roomD[bernardTest].bernard.pos.x);
+
+        // CAMERA STUFF ////////////////////////////////////////////////////////////////////////
 
         my.sprite.camFilter = this.add.sprite(game.config.width/2, game.config.height/2, "cameraFilter").setAlpha(0.1).setVisible(false);
 
@@ -143,9 +155,7 @@ class TestNight extends Phaser.Scene {
 
                 // this.createCamButton(x, y, buttonTexture, scale); ref for function
 
-
         my.sprite.activeCam;
-
 
         // camera button for left hallway corner
         let camButton_leftHallwayCorner = this.createCamButton(1550, 900, "roomButton", 0.4);
@@ -195,7 +205,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_goldenFreddyCloset;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("goldenFreddyCloset_left");
+            my.sprite.curCam.setTexture("goldenFreddyCloset");
         });
 
         // camera button for right hallway
@@ -215,7 +225,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_pirateCove;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("pirateCove_left");
+            my.sprite.curCam.setTexture("pirateCove");
         });
 
         // camera button for right hallway
@@ -225,7 +235,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_backroom;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("backRoom_left");
+            my.sprite.curCam.setTexture("backRoom");
         });
 
         // camera button for right hallway
@@ -235,7 +245,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_kitchen;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("kitchen_right");
+            my.sprite.curCam.setTexture("kitchen");
         });
 
         // camera button for right hallway
@@ -245,7 +255,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_mainHall;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("mainRoom_center");
+            my.sprite.curCam.setTexture("mainRoom");
         });
 
         // camera button for right hallway
@@ -256,7 +266,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_mainStage;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("mainStage_center");
+            my.sprite.curCam.setTexture("mainStage");
         });
 
         // TEXT STUFF //////////////////////////////////////////////////////////////////////////
@@ -300,12 +310,12 @@ class TestNight extends Phaser.Scene {
         this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
-    update(delta, time) {
+    update(time, delta) {
 
         // CONVENIENCE VARIABLES ///////////////////////////////////////////////////////////////
 
         // variable to access delta time
-        let dTime = (delta/1000); // CURRENTLY NOT USED; CHECK AND MAKE SURE IT GETS USED AT SOME POINT, OR DELETE IT
+        let dTime = (delta / 1000); // CURRENTLY NOT USED; CHECK AND MAKE SURE IT GETS USED AT SOME POINT, OR DELETE IT
         // variable to hold elapsed seconds
         let elapsedSeconds = Math.floor(this.nightTimer.getElapsedSeconds());
         // variable to hold elapsed minutes
@@ -313,16 +323,15 @@ class TestNight extends Phaser.Scene {
         // mouse pointer tracker - remember: mouse pos is in pixels
         let pointer = this.input.activePointer;
         // current scroll position of camera
-        let shiftPos = this.cameras.main.scrollX;
-
+        this.shiftPos = this.cameras.main.scrollX;
 
         // VIEW SHIFT //////////////////////////////////////////////////////////////////////////
 
         let burger = 0; // burger is a helper var that stops the UI from shifting all weird on the screen
-        if(pointer.x < 200 && shiftPos > -this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
+        if(pointer.x < 200 && this.shiftPos > -this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
             this.cameras.main.scrollX -= this.CAM_SHIFT_SPEED; burger = -1;
         }
-        if(pointer.x > 1720 && shiftPos < this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
+        if(pointer.x > 1720 && this.shiftPos < this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
             this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; burger = 1;
         }
 
@@ -331,6 +340,16 @@ class TestNight extends Phaser.Scene {
 
         // if power is on, do normal game loop
         if(!this.powerIsOut) {
+
+            // ENEMY LOGIC /////////////////////////////////////////////////////////////////////////
+
+            this.updateEnemyCameraAppearance(my.sprite.bernard, this.shiftPos);
+            my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes);
+            // every other second, plus the offset
+            if(this.bernardTimer <= 0) {
+                my.sprite.bernard.moveEnemy(this.camsAreOpen);
+                this.bernardTimer = 1.0;
+            } else { this.bernardTimer -= dTime; }
 
             // TIMER STUFF /////////////////////////////////////////////////////////////////////////
 
@@ -394,13 +413,13 @@ class TestNight extends Phaser.Scene {
             // UI STUFF ////////////////////////////////////////////////////////////////////////////
 
             // offset ui to be relative to current screen scroll position
-            this.clockText.setPosition(1880 + shiftPos + (this.CAM_SHIFT_SPEED * burger), this.clockText.y);
-            this.nightLabel.setPosition(1880 + shiftPos + (this.CAM_SHIFT_SPEED * burger), this.nightLabel.y);
-            this.powerLabel.setPosition(1880 + shiftPos + (this.CAM_SHIFT_SPEED * burger), this.powerLabel.y);
-            my.sprite.curCam.setPosition(960 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
-            my.sprite.camFilter.setPosition(960 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
-            my.sprite.camMap.setPosition(1625 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 680);
-            my.sprite.camButton.setPosition(960 + shiftPos + (this.CAM_SHIFT_SPEED * burger), 1000);
+            this.clockText.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), this.clockText.y);
+            this.nightLabel.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), this.nightLabel.y);
+            this.powerLabel.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), this.powerLabel.y);
+            my.sprite.curCam.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
+            my.sprite.camFilter.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
+            my.sprite.camMap.setPosition(1625 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 680);
+            my.sprite.camButton.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 1000);
 
             // CAMERA BUTTONS //////////////////////////////////////////////////////////////////////
 
@@ -411,7 +430,7 @@ class TestNight extends Phaser.Scene {
 
                 if(this.camsAreOpen && camButton.hasGorbed == false) {
                     // offset button location with current shift position
-                    camButton.x = camButton.baseX + shiftPos;
+                    camButton.x = camButton.baseX + this.shiftPos;
                     camButton.setVisible(true); // set button to visible
                     camButton.hasGorbed = true;
                 }
@@ -529,5 +548,29 @@ class TestNight extends Phaser.Scene {
         newGroupMember.setScale(scale); // set scale of sprite
         newGroupMember.setVisible(false);
         return newGroupMember; // return new button
+    }
+
+    updateEnemyCameraAppearance(enemy, shiftPos) {
+        let curLocation = enemy.position;
+        //let curLocation = enemy.movement[enemy.index];
+        // this.roomD[curLocation].bernard.pos.x
+
+        //console.log(curLocation + my.sprite.curCam.texture.key);
+
+        // if the camera is on the right tile
+        if(my.sprite.curCam.texture.key == curLocation && this.camsAreOpen)
+        {
+            enemy.x = this.roomD[curLocation].bernard.pos.x + shiftPos;
+            enemy.y = this.roomD[curLocation].bernard.pos.y;
+            enemy.setScale(this.roomD[curLocation].bernard.scale.x, this.roomD[curLocation].bernard.scale.y);
+
+            //enemy.setVisible(true);
+        }
+        else
+        {
+            //enemy.setVisible(false);
+        }
+
+        //if(enemy.attackState == true){enemy.setVisible(false);}
     }
 }
