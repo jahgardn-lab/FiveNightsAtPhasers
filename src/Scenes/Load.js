@@ -28,31 +28,30 @@ class Load extends Phaser.Scene {
 
         // THE GREAT CAMERA BACKGROUND DUMP
         this.load.image("hallway_right", "hallway_right.png");
-        this.load.image("hallway_left", "hallway_left.png");
-
-        this.load.image("hallwayCorner_left", "hallwayCorner_left.png");       
         this.load.image("hallwayCorner_right", "hallwayCorner_right.png");       
+        
+        this.load.image("hallway_left", "hallway_left.png");
+        this.load.image("hallwayCorner_left", "hallwayCorner_left.png");       
 
-        this.load.image("goldenFreddyCloset_left", "freddyCloset.png");       
+        this.load.image("goldenFreddyCloset", "freddyCloset.png");       
         this.load.image("arcade", "arcade.png");       
 
-        this.load.image("pirateCove_left", "pirateCove_0.png");       
+        this.load.image("pirateCove", "pirateCove_0.png");       
 
-        this.load.image("backRoom_left", "backRoom.png");       
-        this.load.image("kitchen_right", "kitchen.png");      
+        this.load.image("backRoom", "backRoom.png");       
+        this.load.image("kitchen", "kitchen.png");      
 
-        this.load.image("mainRoom_center", "mainHall.png");       
-        this.load.image("mainStage_center", "mainStage.png");       
+        this.load.image("mainRoom", "mainHall.png");       
+        this.load.image("mainStage", "mainStage.png");       
 
         // load camera stripe pattern
         this.load.image("cameraFilter", "camera_Stripes.png");
         this.load.image("camMap", "camMap.png");
 
-        // load enemy sprites
+        // load animatronic images
         this.load.image("dylanSprite", "jade.png");
         this.load.image("bernardSprite", "jade.png");
         this.load.image("phaserSprite", "phaserPlaceholder.jpg")
-
 
         // load rooms json file
         this.load.json('roomData', 'roomData.json');
@@ -67,12 +66,6 @@ class Load extends Phaser.Scene {
         //console.log(roomD.rooms[0].connectedRooms[0]); // returns, "Office"
         //console.log(roomD.rooms[1].connectedRooms[1]); // returns, "leftHallway"
         //console.log(roomD.rooms[0]); // returns leftHallway room data
-
-
-
-
-
-
 
 
          // ...and pass to the next Scene

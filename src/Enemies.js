@@ -12,6 +12,8 @@ class Enemies extends Phaser.GameObjects.Sprite{
         this.position = this.movement[this.index]; //Set intial postion to first allowed room
         this.attackState = false; //If the enemy is about to attack
         this.justMoved = false;
+
+        this.hasIncreased = 0;
     }
 
     moveEnemy(inCam){
@@ -61,7 +63,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         if(this.attackState == true){this.visible = false;}
 
         //at certain times increase level by number
-        if(time == 2){this.level += 2;}
-        if(time == 4){this.level += 1;}
+        if(time == 2 && this.hasIncreased == 0){this.level += 2; this.hasIncreased += 1;}
+        if(time == 4 && this.hasIncreased == 1){this.level += 1; this.hasIncreased += 1;}
     }
 }
