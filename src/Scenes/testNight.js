@@ -285,7 +285,7 @@ class TestNight extends Phaser.Scene {
             loop: true, // does the timer loop (no lmao) (could be used for animatronic ai timers)
             repeat: 0, // how many times does timer repeat
             startAt: 0, // sets amount of first timer to skip in milliseconds
-            timeScale: 100, // time scale (1 is normal)
+            timeScale: 1, // time scale (1 is normal)
             paused: false, // do I need to freaking tell you >:(
         });
 
