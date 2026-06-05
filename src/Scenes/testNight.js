@@ -124,6 +124,7 @@ class TestNight extends Phaser.Scene {
 
         // theoretically, camera enemy needs to be put here (in terms of depth)/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
+       
         my.sprite.bernard = new Enemies(this, 3, false, ["mainStage", "backStage", "mainHall", "leftHallway", "leftHallwayCorner"], game.config.width/2, game.config.width/2, "camMap");
 
 
