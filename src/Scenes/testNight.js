@@ -335,9 +335,6 @@ class TestNight extends Phaser.Scene {
             this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; burger = 1;
         }
 
-
-        my.sprite.bernard.update(this.camsAreOpen, my.sprite.curCam.texture.key, elapsedMinutes);
-
         // if power is on, do normal game loop
         if(!this.powerIsOut) {
 
