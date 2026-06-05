@@ -11,6 +11,8 @@ class Enemies extends Phaser.GameObjects.Sprite{
         this.position = this.movement[this.index]; //Set intial postion to first allowed room
         this.attackState = false; //If the enemy is about to attack
         this.justMoved = false;
+
+        this.hasIncreased = 0;
     }
 
     moveEnemy(inCam){
@@ -22,7 +24,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
             //If the enemy AI level is greater than or equal to the movementOpportunity it gets to move
             if(this.level >= movementOpportunity){
                 //If enemy is in it's final position set it up to attack
-                if(this.position == this.movement[this.movement.length-1]){attackPrep();}
+                if(this.position == this.movement[this.movement.length-1]){this.attackPrep();}
                 //Else increase current position index by 1 and set the position to movement at index
                 else{
                     this.index++;
@@ -58,14 +60,14 @@ class Enemies extends Phaser.GameObjects.Sprite{
         }
         
         //if the player is on the same cam as the enemy's position set enemy visible else hide it
-        if(curCam == this.position){this.sprite.setVisible(true);}
-        else{this.sprite.setVisible(false);}
+        if(curCam == this.position){this.visible = true;}
+        else{this.visible = false;}
 
         //if enemy is in office/attack state hide them 
-        if(this.attackState == true){this.sprite.setVisible(false);}
+        if(this.attackState == true){this.visible = false;}
 
         //at certain times increase level by number
-        if(time == 2){this.level += 2;}
-        if(time == 4){this.level += 1;}
+        if(time == 2 && this.hasIncreased == 0){this.level += 2; this.hasIncreased += 1;}
+        if(time == 4 && this.hasIncreased == 1){this.level += 1; this.hasIncreased += 1;}
     }
 }
