@@ -17,20 +17,20 @@
 
     },
 
-    "hallway_left": {
+    "leftHallway": {
 
         "bernard": {
-            "pos": { "x": 0, "y": 0},
-            "scale": { "x": 1, "y": 1}
+            "pos": { "x": 960, "y": 540},
+            "scale": { "x": 0.3, "y": 0.3}
         }           
 
     },
 
-    "hallwayCorner_left": {
+    "leftHallwayCorner": {
 
         "bernard": {
-            "pos": { "x": 0, "y": 0},
-            "scale": { "x": 1, "y": 1}
+            "pos": { "x": 960, "y": 600},
+            "scale": { "x": 0.75, "y": 0.75}
         }           
 
     },
@@ -65,7 +65,7 @@
     "backRoom": {
 
         "bernard": {
-            "pos": { "x": 1200, "y": 540 },
+            "pos": { "x": 1200, "y": 600 },
             "scale": { "x": 0.4, "y": 0.4 }
         }           
 
@@ -83,7 +83,7 @@
     "mainRoom": {
 
         "bernard": {
-            "pos": { "x": 1450, "y": 340},
+            "pos": { "x": 1450, "y": 330},
             "scale": { "x": 0.2, "y": 0.2}
         }           
 

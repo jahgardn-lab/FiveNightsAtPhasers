@@ -13,6 +13,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         this.justMoved = false;
 
         this.hasIncreased = 0;
+        this.roomD = scene.cache.json.get('roomData');
     }
 
     moveEnemy(inCam){
@@ -50,7 +51,8 @@ class Enemies extends Phaser.GameObjects.Sprite{
     positionReturn(){return this.position;}
     attackStateReturn(){return this.attackState;}
 
-    update(cam, curCam, time){
+    update(cam, curCam, time, shiftPos){
+        // NOTE: shift pos is the current camera movement offset (sent from main night script)
         if(this.justMoved){
             this.justMoved = false;
             //here can play any sound effects or handle anything else when enemy just moved
@@ -59,8 +61,13 @@ class Enemies extends Phaser.GameObjects.Sprite{
             }
         }
         
-        //if the player is on the same cam as the enemy's position set enemy visible else hide it
-        if(curCam == this.position){this.visible = true;}
+        //if the player is on the same cam as the enemy's position & the cams are visible, set enemy visible else hide it
+        if(curCam.texture.key == this.position && curCam.visible == true){
+            this.x = this.roomD[this.position].bernard.pos.x + shiftPos;
+            this.y = this.roomD[this.position].bernard.pos.y;
+            this.setScale(this.roomD[this.position].bernard.scale.x, this.roomD[this.position].bernard.scale.y);
+            this.visible = true;
+        }
         else{this.visible = false;}
 
         //if enemy is in office/attack state hide them 

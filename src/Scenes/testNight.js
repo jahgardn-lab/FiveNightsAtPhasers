@@ -160,7 +160,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallwayCorner;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("hallwayCorner_left");
+            my.sprite.curCam.setTexture("leftHallwayCorner");
         });
 
         // camera button for right hallway
@@ -180,7 +180,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallway;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("hallway_left");
+            my.sprite.curCam.setTexture("leftHallway");
         });
 
         // camera button for right hallway
@@ -335,9 +335,9 @@ class TestNight extends Phaser.Scene {
 
             // ENEMY LOGIC /////////////////////////////////////////////////////////////////////////
 
-            this.updateEnemyCameraAppearance(my.sprite.bernard, this.shiftPos);
-            my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes);
-            // every other second, plus the offset
+            my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);
+
+            // every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
                 my.sprite.bernard.moveEnemy(this.camsAreOpen);
                 this.bernardTimer = 1.0;
@@ -540,29 +540,5 @@ class TestNight extends Phaser.Scene {
         newGroupMember.setScale(scale); // set scale of sprite
         newGroupMember.setVisible(false);
         return newGroupMember; // return new button
-    }
-
-    updateEnemyCameraAppearance(enemy, shiftPos) {
-        let curLocation = enemy.position;
-        //let curLocation = enemy.movement[enemy.index];
-        // this.roomD[curLocation].bernard.pos.x
-
-        //console.log(curLocation + my.sprite.curCam.texture.key);
-
-        // if the camera is on the right tile
-        if(my.sprite.curCam.texture.key == curLocation && this.camsAreOpen)
-        {
-            enemy.x = this.roomD[curLocation].bernard.pos.x + shiftPos;
-            enemy.y = this.roomD[curLocation].bernard.pos.y;
-            enemy.setScale(this.roomD[curLocation].bernard.scale.x, this.roomD[curLocation].bernard.scale.y);
-
-            //enemy.setVisible(true);
-        }
-        else
-        {
-            //enemy.setVisible(false);
-        }
-
-        //if(enemy.attackState == true){enemy.setVisible(false);}
     }
 }
