@@ -8,7 +8,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         this.camera = camera; //Can you camera stall the enemy, boolean
         this.movement = movement; //What is this enemy's movement pattern between cameras, array
         this.index = 0; //Index of the current position
-        this.position = this.movement[index]; //Set intial postion to first allowed room
+        this.position = this.movement[this.index]; //Set intial postion to first allowed room
         this.attackState = false; //If the enemy is about to attack
         this.justMoved = false;
     }
@@ -52,10 +52,8 @@ class Enemies extends Phaser.GameObjects.Sprite{
         if(this.justMoved){
             this.justMoved = false;
             //here can play any sound effects or handle anything else when enemy just moved
-
-            //if enemy just moved and player is on cams play static
-            if(cam){
-                //play cam static so we dont have to animated movement
+            if(this.camera){
+                
             }
         }
         
