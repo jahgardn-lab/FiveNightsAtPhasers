@@ -14,18 +14,22 @@ class Enemies extends Phaser.GameObjects.Sprite{
 
         this.hasIncreased = 0;
         this.roomD = scene.cache.json.get('roomData');
+
+        this.doorPosX = x;
+        this.doorPosY = y;
+
     }
 
-    moveEnemy(inCam){
+    moveEnemy(inCam, doorIsClosed){
         //Get random number between 1-10 to check against AI level
-        let movementOpportunity = Math.floor(Math.random()*10) + 1;
+        let movementOpportunity = Math.floor(Math.random()*20) + 1;
         //If the enemy can be camera stalled and player isn't in cams
         //Or if the enemy isn't able to be camera stalled the enemy takes it movement opportunity
         if((this.camera && !inCam) || !this.camera){
             //If the enemy AI level is greater than or equal to the movementOpportunity it gets to move
             if(this.level >= movementOpportunity){
                 //If enemy is in it's final position set it up to attack
-                if(this.position == this.movement[this.movement.length-1]){this.attackPrep();}
+                if(this.position == this.movement[this.movement.length-1]){this.attackPrep(doorIsClosed);}
                 //Else increase current position index by 1 and set the position to movement at index
                 else{
                     this.index++;
@@ -38,9 +42,31 @@ class Enemies extends Phaser.GameObjects.Sprite{
         return false;
     }
 
-    attackPrep(){
+    attackPrep(doorIsClosed){
         //Get Enemy ready to attack at next chance
-        this.attackState = true;
+        // if enemy is ready to kill, place at respective door
+        if(this.attackState == false) {
+            // place at back of screen
+            this.x = this.doorPosX;
+            this.y = this.doorPosY;
+            this.scale = 1;
+            this.depth = -999;
+            this.visible = true;
+            this.attackState = true;
+        } else { // otherwise, kill time
+
+            if(doorIsClosed == true) {
+                this.index = 0;
+                this.position = this.movement[this.index];
+                this.attackState = false;
+            }
+            else
+            {
+                console.log("you're dead :)");
+
+            }
+        }
+
     }
 
     //Helper Functions that return class variables
@@ -62,13 +88,13 @@ class Enemies extends Phaser.GameObjects.Sprite{
         }
         
         //if the player is on the same cam as the enemy's position & the cams are visible, set enemy visible else hide it
-        if(curCam.texture.key == this.position && curCam.visible == true){
+        if(curCam.texture.key == this.position && curCam.visible == true) {
             this.x = this.roomD[this.position].bernard.pos.x + shiftPos;
             this.y = this.roomD[this.position].bernard.pos.y;
             this.setScale(this.roomD[this.position].bernard.scale.x, this.roomD[this.position].bernard.scale.y);
+            this.depth = 1;
             this.visible = true;
-        }
-        else{this.visible = false;}
+        } else {this.visible = false;}
 
         //if enemy is in office/attack state hide them 
         if(this.attackState == true){this.visible = false;}
