@@ -1,12 +1,16 @@
 class Enemies extends Phaser.GameObjects.Sprite{
 
-    constructor(level, camera, movement){
+    constructor(scene, level, camera, movement, x, y, sprite){
+        super(scene, x, y, sprite);
+        scene.add.existing(this);
+    
         this.level = level; //AI level for random movement checks, integer
         this.camera = camera; //Can you camera stall the enemy, boolean
         this.movement = movement; //What is this enemy's movement pattern between cameras, array
         this.index = 0; //Index of the current position
         this.position = this.movement[index]; //Set intial postion to first allowed room
         this.attackState = false; //If the enemy is about to attack
+        this.justMoved = false;
     }
 
     moveEnemy(inCam){
@@ -24,8 +28,11 @@ class Enemies extends Phaser.GameObjects.Sprite{
                     this.index++;
                     this.position = this.movement[this.index];
                 }
+                this.justMoved = true;
+                return true;
             }
         }
+        return false;
     }
 
     attackPrep(){
@@ -41,7 +48,26 @@ class Enemies extends Phaser.GameObjects.Sprite{
     positionReturn(){return this.position;}
     attackStateReturn(){return this.attackState;}
 
-    update(cam){
-        this.moveEnemy(cam);
+    update(cam, curCam, time){
+        if(this.justMoved){
+            this.justMoved = false;
+            //here can play any sound effects or handle anything else when enemy just moved
+
+            //if enemy just moved and player is on cams play static
+            if(cam){
+                //play cam static so we dont have to animated movement
+            }
+        }
+        
+        //if the player is on the same cam as the enemy's position set enemy visible else hide it
+        if(curCam == this.position){this.sprite.setVisible(true);}
+        else{this.sprite.setVisible(false);}
+
+        //if enemy is in office/attack state hide them 
+        if(this.attackState == true){this.sprite.setVisible(false);}
+
+        //at certain times increase level by number
+        if(time == 2){this.level += 2;}
+        if(time == 4){this.level += 1;}
     }
 }
