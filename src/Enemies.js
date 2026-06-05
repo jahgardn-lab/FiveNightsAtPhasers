@@ -63,7 +63,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
             else
             {
                 console.log("you're dead :)");
-
+                this.scene.scene.start("loseScene");
             }
         }
 

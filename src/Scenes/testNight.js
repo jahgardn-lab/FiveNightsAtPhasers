@@ -130,7 +130,7 @@ class TestNight extends Phaser.Scene {
 
         // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
        
-        my.sprite.bernard = new Enemies(this, 20, false, ["mainStage", "backRoom", "mainRoom", "leftHallway", "leftHallwayCorner"], -150, 540, "bernard");
+        my.sprite.bernard = new Enemies(this, 2, false, ["mainStage", "backRoom", "mainRoom", "leftHallway", "leftHallwayCorner"], -150, 540, "bernard");
         this.bernardTimer = 1.0;
 
         // testing accessing enemy stuff
@@ -342,7 +342,7 @@ class TestNight extends Phaser.Scene {
             // ENEMY LOGIC /////////////////////////////////////////////////////////////////////////
 
             // place enemy in cams unless at door
-            if(my.sprite.bernard.attackState == false) { my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos); console.log("BURGER"); }
+            if(my.sprite.bernard.attackState == false) { my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos); }
             
             // every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
@@ -444,6 +444,7 @@ class TestNight extends Phaser.Scene {
 
 
             //TODO: do the powerout sequnce
+            this.scene.start("loseScene");
 
 
 
@@ -537,7 +538,7 @@ class TestNight extends Phaser.Scene {
 
     // called when 6 AM is reached
     // can prob just use this function to load the win scene
-    hasWon() { this.HAS_WON = true; }
+    hasWon() { this.HAS_WON = true; this.scene.start("winScene"); }
 
     // creates new button sprite and adds it to buttons
     createCamButton(x, y, sprite, scale) {
