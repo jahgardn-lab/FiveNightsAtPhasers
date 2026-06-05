@@ -58,11 +58,11 @@ class Enemies extends Phaser.GameObjects.Sprite{
         }
         
         //if the player is on the same cam as the enemy's position set enemy visible else hide it
-        if(curCam == this.position){this.sprite.setVisible(true);}
-        else{this.sprite.setVisible(false);}
+        if(cam && curCam == this.position){this.visible = true;}
+        else{this.visible = false;}
 
         //if enemy is in office/attack state hide them 
-        if(this.attackState == true){this.sprite.setVisible(false);}
+        if(this.attackState == true){this.visible = false;}
 
         //at certain times increase level by number
         if(time == 2){this.level += 2;}

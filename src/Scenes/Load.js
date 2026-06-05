@@ -48,6 +48,9 @@ class Load extends Phaser.Scene {
         this.load.image("cameraFilter", "camera_Stripes.png");
         this.load.image("camMap", "camMap.png");
 
+        // load enemy sprites
+        this.load.image("bernardSprite", "jade.png")
+
 
         // load rooms json file
         this.load.json('roomData', 'roomData.json');
