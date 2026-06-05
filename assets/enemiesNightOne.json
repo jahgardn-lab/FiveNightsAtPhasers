@@ -1,0 +1,40 @@
+{
+    "enemies": [
+        {
+            "name": "Dylan",
+            "level": 0,
+            "camera": false,
+            "movement": [[], []],
+            "x": 0,
+            "y":0,
+            "sprite": ""
+        },
+        {
+            "name": "Jade",
+            "level": 0,
+            "camera": false,
+            "movement": [[], []],
+            "x": 0,
+            "y":0,
+            "sprite": ""
+        },
+        {
+            "name": "Phaser",
+            "level": 0,
+            "camera": true,
+            "movement": [[], []],
+            "x": 0,
+            "y":0,
+            "sprite": ""
+        },
+        {
+            "name": "Foxy",
+            "level": 0,
+            "camera": true,
+            "movement": [[], []],
+            "x": 0,
+            "y":0,
+            "sprite": ""
+        }
+    ]
+}
