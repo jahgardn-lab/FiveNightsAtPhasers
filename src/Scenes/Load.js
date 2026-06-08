@@ -23,9 +23,6 @@ class Load extends Phaser.Scene {
         this.load.image("door", "door.png");
         this.load.image("door_blackout", "door_blackout.png");
 
-        // load default camera image
-        this.load.image("camera_placeholder", "camera_placeholder.png");
-
         // THE GREAT CAMERA BACKGROUND DUMP
         this.load.image("hallway_right", "hallway_right.png");
         this.load.image("hallwayCorner_right", "hallwayCorner_right.png");       
@@ -49,7 +46,7 @@ class Load extends Phaser.Scene {
         this.load.image("camMap", "camMap.png");
 
         // load animatronic images
-        this.load.image("dylanSprite", "dylanPlaceholder.png");
+        this.load.image("dylanSprite", "dylan.png");
         this.load.image("bernardSprite", "jade.png");
         this.load.image("phaserSprite", "phaserPlaceholder.jpg");
         this.load.image("rushSprite1", "rushPhase1.png");
