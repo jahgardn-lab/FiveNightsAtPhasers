@@ -30,8 +30,9 @@ class TestNight extends Phaser.Scene {
     create() {
         // access var that lets us read the room data
         this.roomD = this.cache.json.get('roomData');
+        this.enemyInfo = this.cache.json.get('enemiesNight1');
 
-        console.log(this.roomD.leftHallway.bernard.pos.x);
+        let enemy = this.enemyInfo;
 
         // place left door on left side of screen
         my.sprite.doorLeft = this.add.sprite(960, -500, "door").setScale(1);
@@ -132,9 +133,14 @@ class TestNight extends Phaser.Scene {
 
         // this.add.enemies(scene, ai level, canBeCameraStalled, movement array of path, defX, defY, sprite);
        
-        my.sprite.bernard = new Enemies(this, 20, false, ["mainStage", "backRoom", "mainRoom", "leftHallway", "leftHallwayCorner"], -150, 540, "bernard");
+        my.sprite.bernard = new Enemies(this, enemy.Bernard.level, enemy.Bernard.camera, enemy.Bernard.movement, enemy.Bernard.x, enemy.Bernard.y, enemy.Bernard.coordinates, enemy.Bernard.sprite);
         this.bernardTimer = 1.0;
 
+        my.sprite.phaser = new Enemies(this, enemy.Phaser.level, enemy.Phaser.camera, enemy.Phaser.movement, enemy.Phaser.x, enemy.Phaser.y, enemy.Phaser.coordinates, enemy.Phaser.sprite);
+
+        my.sprite.dylan = new Enemies(this, enemy.Dylan.level, enemy.Dylan.camera, enemy.Dylan.movement, enemy.Dylan.x, enemy.Dylan.y, enemy.Dylan.coordinates, enemy.Dylan.sprite);
+
+        my.sprite.rush = new Enemies(this, enemy.Rush.level, enemy.Rush.camera, enemy.Rush.movement, enemy.Rush.x, enemy.Rush.y, enemy.Rush.coordinates, enemy.Rush.sprite);
         // testing accessing enemy stuff
         //let bernardTest = my.sprite.bernard.movement[3];
         //let bernardTest = "leftHallway";
@@ -344,8 +350,10 @@ class TestNight extends Phaser.Scene {
             // ENEMY LOGIC /////////////////////////////////////////////////////////////////////////
 
             // place enemy in cams unless at door
-            if(my.sprite.bernard.attackState == false) { my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos); console.log("BURGER"); }
-            
+            if(my.sprite.bernard.attackState == false) { my.sprite.bernard.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
+            if(my.sprite.phaser.attackState == false) { my.sprite.phaser.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
+            if(my.sprite.dylan.attackState == false) { my.sprite.dylan.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
+            if(my.sprite.rush.attackState == false) { my.sprite.rush.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
             // every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
                 my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
@@ -446,6 +454,7 @@ class TestNight extends Phaser.Scene {
 
 
             //TODO: do the powerout sequnce
+            this.scene.start("loseScene");
 
 
 
@@ -539,7 +548,7 @@ class TestNight extends Phaser.Scene {
 
     // called when 6 AM is reached
     // can prob just use this function to load the win scene
-    hasWon() { this.HAS_WON = true; }
+    hasWon() { this.HAS_WON = true; this.scene.start("winScene"); }
 
     // creates new button sprite and adds it to buttons
     createCamButton(x, y, sprite, scale) {

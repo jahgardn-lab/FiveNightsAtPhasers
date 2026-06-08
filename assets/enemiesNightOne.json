@@ -1,38 +1,42 @@
 {
-       "Chillin": {
+       "Dylan": {
             "name": "Dyan",
             "level": 0,
             "camera": false,
-            "movement": [["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_right", "hallwayCorner_right"], ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_right", "hallwayCorner_right"]],
+            "movement": [["mainStage", "backRoom", "mainRoom", "hallway_right", "hallwayCorner_right"], ["mainStage", "backRoom", "mainRoom", "hallway_right", "hallwayCorner_right"]],
             "x": 1160,
             "y": 540,
+            "coordinates": [[[1060, 540, 1],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]],
             "sprite": "dylanSprite"
         },
         "Bernard": {
             "name": "Bernard",
             "level": 0,
             "camera": false,
-            "movement": [["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"], ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"]],
+            "movement": [["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"], ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"]],
             "x": 760,
             "y":540,
+            "coordinates": [[[760, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]],
             "sprite": "bernardSprite"
         },
         "Phaser": {
             "name": "Phaser",
             "level": 0,
             "camera": true,
-            "movement": [["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_right", "hallwayCorner_right"], ["mainStage_center", "backRoom_left", "mainRoom_center", "hallway_left", "hallwayCorner_left"]],
+            "movement": [["mainStage", "backRoom", "mainRoom", "hallway", "hallwayCorner"], ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"]],
             "x": 960,
             "y":540,
+            "coordinates": [[[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]],
             "sprite": "phaserSprite"
         },
         "Rush": {
             "name": "Rush",
             "level": 0,
             "camera": true,
-            "movement": [[], []],
+            "movement": [["pirateCove"], ["pirateCove"]],
             "x": 0,
             "y":0,
-            "sprite": ""
+             "coordinates": [[[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]],
+            "sprite": "rushSprite1"
         }
 }

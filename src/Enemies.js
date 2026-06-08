@@ -1,24 +1,28 @@
 class Enemies extends Phaser.GameObjects.Sprite{
 
-    constructor(scene, level, camera, movement, x, y, sprite){
+    constructor(scene, level, camera, movement, x, y, coordinates, sprite){
         super(scene, x, y, sprite);
         scene.add.existing(this);
     
         this.level = level; //AI level for random movement checks, integer
+        this.hasIncreased = 0;//If the AI level has increased
         this.camera = camera; //Can you camera stall the enemy, boolean
         this.chosenMoveArray = Math.floor(Math.random()*2);
         this.movement = movement[this.chosenMoveArray]; //What is this enemy's movement pattern between cameras, array
         this.index = 0; //Index of the current position
         this.position = this.movement[this.index]; //Set intial postion to first allowed room
         this.attackState = false; //If the enemy is about to attack
-        this.justMoved = false;
+        this.justMoved = false; //If the enemy just succeeded a movemenet opportunity
+        this.coordinates = coordinates[this.chosenMoveArray];//Camera coordinates for the chosen movement array
+  
 
-        this.hasIncreased = 0;
-        this.roomD = scene.cache.json.get('roomData');
+        this.coveLevel = 0;//Pirate cove enemys phase level
 
-        this.doorPosX = x;
+        //TODO
+        this.doorPosX = x;//Dylan wtf do these variables do please leave a comment
         this.doorPosY = y;
 
+        //this.enemyD = scene.cache.json.get('');//Json holding all enemy data 
     }
 
     moveEnemy(inCam, doorIsClosed){
@@ -54,20 +58,38 @@ class Enemies extends Phaser.GameObjects.Sprite{
             this.depth = -999;
             this.visible = true;
             this.attackState = true;
-        } else { // otherwise, kill time
-
+        } 
+        else { // otherwise, kill time
             if(doorIsClosed == true) {
                 this.index = 0;
                 this.position = this.movement[this.index];
                 this.attackState = false;
             }
-            else
-            {
+            else{
                 console.log("you're dead :)");
 
             }
         }
+    }
 
+    coveMove(inCam){
+        //Get random number between 1-10 to check against AI level
+        let movementOpportunity = Math.floor(Math.random()*20) + 1;
+        if(this.level >= movementOpportunity){
+            if(this.coveLevel >= 5){
+                //If enemy is in it's final position set it up to attack
+                if(this.position == this.movement[this.movement.length-1]){this.attackPrep(doorIsClosed);}
+                //Else increase current position index by 1 and set the position to movement at index
+                else{
+                    this.index++;
+                    this.position = this.movement[this.index];
+                }
+            }
+            else if(!inCam){this.coveLevel++;}
+            this.justMoved = true;
+            return true;
+        }
+        return false;
     }
 
     //Helper Functions that return class variables
@@ -77,6 +99,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
     indexReturn(){return this.index;}
     positionReturn(){return this.position;}
     attackStateReturn(){return this.attackState;}
+    coveLevelReturn(){return this.coveLevel;}
 
     update(cam, curCam, time, shiftPos){
         // NOTE: shift pos is the current camera movement offset (sent from main night script)
@@ -88,12 +111,15 @@ class Enemies extends Phaser.GameObjects.Sprite{
             }
         }
         
+       // this.access = this.roomD[this.postion];
         //if the player is on the same cam as the enemy's position & the cams are visible, set enemy visible else hide it
+        //Also sets 
         if(curCam.texture.key == this.position && curCam.visible == true) {
-            this.x = this.roomD[this.position].bernard.pos.x + shiftPos;
-            this.y = this.roomD[this.position].bernard.pos.y;
-            this.setScale(this.roomD[this.position].bernard.scale.x, this.roomD[this.position].bernard.scale.y);
-            this.depth = 1;
+            this.x = this.coordinates[this.index][0]+shiftPos;
+            this.y = this.coordinates[this.index][1];
+            this.setScale(this.coordinates[this.index][2]);
+           //TODO
+            this.depth = 1;//what is this for Dylan?
             this.visible = true;
         } else {this.visible = false;}
 
