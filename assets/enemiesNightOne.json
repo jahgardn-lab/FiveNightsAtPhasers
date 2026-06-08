@@ -1,13 +1,13 @@
 {
        "Dylan": {
             "name": "Dyan",
-            "level": 1,
+            "level": 0,
             "camera": false,
             "movement": [
-                ["mainStage", "backRoom", "mainRoom", "hallway_right", "hallwayCorner_right"],
-                ["mainStage", "backRoom", "mainRoom", "hallway_right", "hallwayCorner_right"]
+                ["mainStage", "kitchen", "mainRoom", "hallway_right", "hallwayCorner_right"],
+                ["mainStage", "kitchen", "mainRoom", "hallway_right", "hallwayCorner_right"]
             ],
-            "x": 1250,
+            "x": 2100,
             "y": 540,
             "coordinates": [
                 [[1250, 540, 0.4],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], 
@@ -17,13 +17,13 @@
         },
         "Bernard": {
             "name": "Bernard",
-            "level": 1,
+            "level": 0,
             "camera": false,
             "movement": [
                 ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"],
                 ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"]
             ],
-            "x": 760,
+            "x": -200,
             "y":540,
             "coordinates": [
                 [[760, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],

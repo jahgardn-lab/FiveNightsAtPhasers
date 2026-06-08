@@ -9,7 +9,7 @@ class TestNight extends Phaser.Scene {
     init() {
         this.HAS_WON = false;
         this.CAM_SHIFT_AMOUNT = 390;
-        this.CAM_SHIFT_SPEED = 15;
+        this.CAM_SHIFT_SPEED = 20;
         this.MAX_POWER = 1000;
 
         this.power = 1000;
@@ -137,13 +137,13 @@ class TestNight extends Phaser.Scene {
         this.bernardTimer = 1.0;
 
         my.sprite.phaser = new Enemies(this, enemy.Phaser.level, enemy.Phaser.camera, enemy.Phaser.movement, enemy.Phaser.x, enemy.Phaser.y, enemy.Phaser.coordinates, enemy.Phaser.sprite);
-        this.phaserTimer = 1.25;
+        this.phaserTimer = 2.0;
 
         my.sprite.dylan = new Enemies(this, enemy.Dylan.level, enemy.Dylan.camera, enemy.Dylan.movement, this.enemyD.Dylan.x, enemy.Dylan.y, enemy.Dylan.coordinates, enemy.Dylan.sprite);
-        this.dylanTimer = 1.5;
+        this.dylanTimer = 3.0;
 
         my.sprite.rush = new Enemies(this, enemy.Rush.level, enemy.Rush.camera, enemy.Rush.movement, enemy.Rush.x, enemy.Rush.y, enemy.Rush.coordinates, enemy.Rush.sprite);
-        this.rushTimer = 1.75;
+        this.rushTimer = 4.0;
         
         // testing accessing enemy stuff
         //let bernardTest = my.sprite.bernard.movement[3];
@@ -181,7 +181,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallwayCorner;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("leftHallwayCorner");
+            my.sprite.curCam.setTexture("hallwayCorner_left");
         });
 
         // camera button for right hallway
@@ -203,7 +203,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallway;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("leftHallway");
+            my.sprite.curCam.setTexture("hallway_left");
         });
 
         // camera button for right hallway
@@ -351,16 +351,12 @@ class TestNight extends Phaser.Scene {
         // current scroll position of camera
         this.shiftPos = this.cameras.main.scrollX;
 
-        // VIEW SHIFT //////////////////////////////////////////////////////////////////////////
+        // UI/CAMERA OFFSET ////////////////////////////////////////////////////////////////////
 
         let burger = 0; // burger is a helper var that stops the UI from shifting all weird on the screen
-        if(pointer.x < 200 && this.shiftPos > -this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
-            this.cameras.main.scrollX -= this.CAM_SHIFT_SPEED; burger = -1;
-        }
-        if(pointer.x > 1720 && this.shiftPos < this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
-            this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; burger = 1;
-        }
-
+        if(pointer.x < 300 && this.shiftPos > -this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) { burger = -1; }
+        if(pointer.x > 1620 && this.shiftPos < this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) { burger =  1; }
+        
         // if power is on, do normal game loop
         if(!this.powerIsOut) {
 
@@ -374,25 +370,25 @@ class TestNight extends Phaser.Scene {
             // bernard timer, currently every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
                 my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
-                this.bernardTimer = 1.0;
+                this.bernardTimer = 4.0;
             } else { this.bernardTimer -= dTime; }
 
             // phaser timer, currently every second (for offset, set initial value of timer higher)
             if(this.phaserTimer <= 0) {
                 my.sprite.phaser.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
-                this.phaserTimer = 1.0;
+                this.phaserTimer = 4.0;
             } else { this.phaserTimer -= dTime; }
 
             // dylan timer, currently every second (for offset, set initial value of timer higher)
             if(this.dylanTimer <= 0) {
                 my.sprite.dylan.moveEnemy(this.camsAreOpen, this.rightDoorClosed);
-                this.dylanTimer = 1.0;
+                this.dylanTimer = 4.0;
             } else { this.dylanTimer -= dTime; }
 
             // rush timer, currently every second (for offset, set initial value of timer higher)
             if(this.rushTimer <= 0) {
                 my.sprite.rush.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
-                this.rushTimer = 1.0;
+                this.rushTimer = 4.0;
             } else { this.rushTimer -= dTime; }
 
 
@@ -495,6 +491,11 @@ class TestNight extends Phaser.Scene {
 
 
         }
+
+        // VIEW SHIFT //////////////////////////////////////////////////////////////////////////
+
+        if(burger == -1) { this.cameras.main.scrollX -= this.CAM_SHIFT_SPEED; }
+        if(burger == 1) { this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; }
  
     }
 
