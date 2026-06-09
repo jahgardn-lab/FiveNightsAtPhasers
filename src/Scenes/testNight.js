@@ -9,11 +9,12 @@ class TestNight extends Phaser.Scene {
     init() {
         this.HAS_WON = false;
         this.CAM_SHIFT_AMOUNT = 390;
-        this.CAM_SHIFT_SPEED = 15;
+        this.CAM_SHIFT_SPEED = 20;
         this.MAX_POWER = 1000;
 
         this.power = 1000;
         this.powerIsOut = false;
+        this.hasTriggeredPowerout = false;
 
         this.hasToggledCams = false;
         this.hasToggledCams_space = false;
@@ -33,6 +34,9 @@ class TestNight extends Phaser.Scene {
         this.enemyD = this.cache.json.get('enemiesNight1');
 
         let enemy = this.enemyD;
+
+        // place left door on left side of screen
+        my.sprite.phaserBlackout = this.add.sprite(-200, 700, "phaserBlackoutSprite").setScale(0.5).setAlpha(0.0);
 
         // place left door on left side of screen
         my.sprite.doorLeft = this.add.sprite(960, -500, "door").setScale(1);
@@ -57,25 +61,25 @@ class TestNight extends Phaser.Scene {
                 // because of this, the door is considered closed the second the player clicks.
                 // if we want to be mean to the player, we could put door is closed inside the tween onComplete
                 // so the door has to be fully closed to count (but that feels pretty mean)
-                this.leftDoorClosed = true;
+                
                 this.doorLeftIsMoving = true;
                 this.tweens.add({
                     targets: my.sprite.doorLeft,
                     y: 540,
                     duration: 500, // Duration in milliseconds
                     ease: 'Power1', // Easing function
-                    onComplete: () => { this.doorLeftIsMoving = false; }
+                    onComplete: () => { this.doorLeftIsMoving = false; this.leftDoorClosed = true; }
                 });
             } else if(this.leftDoorClosed && !this.doorLeftIsMoving) {
                 my.sprite.doorButtonLeft.setTexture("doorButton_open");
-                this.leftDoorClosed = false;
+                
                 this.doorLeftIsMoving = true;
                 this.tweens.add({
                     targets: my.sprite.doorLeft,
                     y: -500,
                     duration: 1000, // Duration in milliseconds
                     ease: 'Power1', // Easing function
-                    onComplete: () => { this.doorLeftIsMoving = false; }
+                    onComplete: () => { this.doorLeftIsMoving = false; this.leftDoorClosed = false; }
                 });
             }
         });
@@ -137,13 +141,13 @@ class TestNight extends Phaser.Scene {
         this.bernardTimer = 1.0;
 
         my.sprite.phaser = new Enemies(this, enemy.Phaser.level, enemy.Phaser.camera, enemy.Phaser.movement, enemy.Phaser.x, enemy.Phaser.y, enemy.Phaser.coordinates, enemy.Phaser.sprite);
-        this.phaserTimer = 1.25;
+        this.phaserTimer = 2.0;
 
         my.sprite.dylan = new Enemies(this, enemy.Dylan.level, enemy.Dylan.camera, enemy.Dylan.movement, this.enemyD.Dylan.x, enemy.Dylan.y, enemy.Dylan.coordinates, enemy.Dylan.sprite);
-        this.dylanTimer = 1.5;
+        this.dylanTimer = 3.0;
 
         my.sprite.rush = new Enemies(this, enemy.Rush.level, enemy.Rush.camera, enemy.Rush.movement, enemy.Rush.x, enemy.Rush.y, enemy.Rush.coordinates, enemy.Rush.sprite);
-        this.rushTimer = 1.75;
+        this.rushTimer = 4.0;
         
         // testing accessing enemy stuff
         //let bernardTest = my.sprite.bernard.movement[3];
@@ -181,7 +185,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallwayCorner;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("leftHallwayCorner");
+            my.sprite.curCam.setTexture("hallwayCorner_left");
         });
 
         // camera button for right hallway
@@ -203,7 +207,7 @@ class TestNight extends Phaser.Scene {
             my.sprite.activeCam.setTexture("roomButton");
             my.sprite.activeCam = camButton_leftHallway;
             my.sprite.activeCam.setTexture("roomButton_active");
-            my.sprite.curCam.setTexture("leftHallway");
+            my.sprite.curCam.setTexture("hallway_left");
         });
 
         // camera button for right hallway
@@ -351,16 +355,12 @@ class TestNight extends Phaser.Scene {
         // current scroll position of camera
         this.shiftPos = this.cameras.main.scrollX;
 
-        // VIEW SHIFT //////////////////////////////////////////////////////////////////////////
+        // UI/CAMERA OFFSET ////////////////////////////////////////////////////////////////////
 
         let burger = 0; // burger is a helper var that stops the UI from shifting all weird on the screen
-        if(pointer.x < 200 && this.shiftPos > -this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
-            this.cameras.main.scrollX -= this.CAM_SHIFT_SPEED; burger = -1;
-        }
-        if(pointer.x > 1720 && this.shiftPos < this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) {
-            this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; burger = 1;
-        }
-
+        if(pointer.x < 300 && this.shiftPos > -this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) { burger = -1; }
+        if(pointer.x > 1620 && this.shiftPos < this.CAM_SHIFT_AMOUNT && !this.camsAreOpen) { burger =  1; }
+        
         // if power is on, do normal game loop
         if(!this.powerIsOut) {
 
@@ -373,26 +373,32 @@ class TestNight extends Phaser.Scene {
             if(my.sprite.rush.attackState == false) { my.sprite.rush.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
             // bernard timer, currently every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
-                my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
-                this.bernardTimer = 1.0;
+                my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed, this.shiftPos);
+                this.bernardTimer = 4.0;
             } else { this.bernardTimer -= dTime; }
 
             // phaser timer, currently every second (for offset, set initial value of timer higher)
             if(this.phaserTimer <= 0) {
-                my.sprite.phaser.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
-                this.phaserTimer = 1.0;
+                my.sprite.phaser.moveEnemy(this.camsAreOpen, this.leftDoorClosed, this.shiftPos);
+                this.phaserTimer = 4.0;
             } else { this.phaserTimer -= dTime; }
 
             // dylan timer, currently every second (for offset, set initial value of timer higher)
             if(this.dylanTimer <= 0) {
-                my.sprite.dylan.moveEnemy(this.camsAreOpen, this.rightDoorClosed);
-                this.dylanTimer = 1.0;
+                my.sprite.dylan.moveEnemy(this.camsAreOpen, this.rightDoorClosed, this.shiftPos);
+                this.dylanTimer = 4.0;
             } else { this.dylanTimer -= dTime; }
 
             // rush timer, currently every second (for offset, set initial value of timer higher)
             if(this.rushTimer <= 0) {
-                my.sprite.rush.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
-                this.rushTimer = 1.0;
+                let didFoxyMove = my.sprite.rush.coveMove(this.leftDoorClosed, this.camsAreOpen, this.shiftPos);
+                if(didFoxyMove == true) {
+                    let rushSpriteIndex = my.sprite.rush.coveLevel + 1;
+                    if(rushSpriteIndex < 6) { my.sprite.rush.setTexture("rushSprite" + rushSpriteIndex); }
+                                       else { my.sprite.rush.setTexture("rushSprite5"); }
+                }
+
+                this.rushTimer = 2.0;
             } else { this.rushTimer -= dTime; }
 
 
@@ -485,17 +491,76 @@ class TestNight extends Phaser.Scene {
                 }
             }});
 
-        } else { // otherwise, do powerout sequence
+        } else if(this.powerIsOut && !this.hasTriggeredPowerout) { // otherwise, do powerout sequence
 
+            /* Hey, so please note: this is all a hard-coded nightmare BUT IT WORKS.
+            so please PLEASE. Don't. Touch. */
 
+            // set up blinkin phaze
+            my.sprite.phaserBlackout.setAlpha(0);
+            let randomBlinkTimer = Phaser.Math.Between(4000, 6000);
+            let randomBlinkNum   = Phaser.Math.Between(   0, 2);
+            this.tweens.add({
+                targets: my.sprite.phaserBlackout,
+                alpha: 0.5,
+                duration: randomBlinkTimer,
+                ease: 'Sine.easeInOut',
+                yoyo: true,
+                repeat: randomBlinkNum,
+                onComplete: () => {
+                    
+                    // set up jumpscare stuff idk man
+                    my.sprite.phaser.depth = 999;
+                    my.sprite.phaser.scale = 5;
+                    my.sprite.phaser.x = 960 + this.shiftPos;
+                    my.sprite.phaser.y = 2060;
+                    my.sprite.phaser.setTexture("phaserBlackoutJumpscareSprite");
+                    my.sprite.phaser.visible = true;
+                    let shakeIntensity = 200;
 
-            //TODO: do the powerout sequnce
-            this.scene.start("loseScene");
+                    let shakeTimeX = Phaser.Math.Between(15, 35);
+                    let shakeTimeY = Phaser.Math.Between(15, 35);
 
+                    this.tweens.add({
+                        targets: my.sprite.phaser,
+                        x: my.sprite.phaser.x + shakeIntensity,
+                        //y: my.sprite.phaser.y + shakeIntensity,
+                        duration: shakeTimeX,           // Very fast movements (50ms)
+                        ease: 'Sine.easeInOut',
+                        //ease: 'Bounce',
+                        yoyo: true,             // Move back to origin
+                        repeat: 10,             // Number of shakes
+                        onComplete: () => {
+                            // send to lose screen
+                            this.scene.start("loseScene");                    
+                        }
+                    });
 
+                    this.tweens.add({
+                        targets: my.sprite.phaser,
+                        //x: my.sprite.phaser.x + shakeIntensity,
+                        y: my.sprite.phaser.y + shakeIntensity,
+                        duration: shakeTimeY,           // Very fast movements (50ms)
+                        ease: 'Sine.easeInOut',
+                        //ease: 'Bounce',
+                        yoyo: true,             // Move back to origin
+                        repeat: 10,             // Number of shakes
+                        onComplete: () => {
+                            // send to lose screen
+                            this.scene.start("loseScene");                    
+                        }
+                    });
 
+                }
+            });
+
+            this.hasTriggeredPowerout = true;
         }
- 
+
+        // VIEW SHIFT //////////////////////////////////////////////////////////////////////////
+
+        if(burger == -1) { this.cameras.main.scrollX -= this.CAM_SHIFT_SPEED; }
+        if(burger == 1) { this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; }
     }
 
     // HELPER FUNCTIONS //
@@ -522,9 +587,10 @@ class TestNight extends Phaser.Scene {
             this.powerLabel.setVisible(false);
             my.sprite.camButton.setVisible(false);
 
+            
             // if cams are open, disable camera buttons
             this.camButtons.children.iterate((camButton) => { if(camButton) { 
-                if(!this.camsAreOpen && camButton.hasGorbed == true) {
+                if(this.camsAreOpen && camButton.hasGorbed == true) {
                     camButton.setVisible(false); // set button to invisible
                     camButton.hasGorbed = false;
                 }
@@ -573,6 +639,13 @@ class TestNight extends Phaser.Scene {
             my.sprite.doorRight.setTexture("door_blackout");
 
             my.sprite.office.setTexture("office_blackout");
+
+            // set animatronics invisible, just in case
+            my.sprite.bernard.setVisible(false);
+            my.sprite.dylan.setVisible(false);
+            my.sprite.phaser.setVisible(false);
+            my.sprite.rush.setVisible(false);
+
 
             this.powerIsOut = true;
         }

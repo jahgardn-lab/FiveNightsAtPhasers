@@ -6,6 +6,9 @@ class Load extends Phaser.Scene {
     preload() {
         this.load.setPath("./assets/");
 
+        // load lose scene
+        this.load.image("loseScene", "LoseScene.png");
+
         // load camera button
         this.load.image("cameraButton", "cameraButton.png");
         // camera location buttons
@@ -27,13 +30,13 @@ class Load extends Phaser.Scene {
         this.load.image("hallway_right", "hallway_right.png");
         this.load.image("hallwayCorner_right", "hallwayCorner_right.png");       
         
-        this.load.image("leftHallway", "hallway_left.png");
-        this.load.image("leftHallwayCorner", "hallwayCorner_left.png");       
+        this.load.image("hallway_left", "hallway_left.png");
+        this.load.image("hallwayCorner_left", "hallwayCorner_left.png");       
 
         this.load.image("goldenFreddyCloset", "freddyCloset.png");       
         this.load.image("arcade", "arcade.png");       
 
-        this.load.image("pirateCove", "pirateCove_0.png");       
+        this.load.image("pirateCove", "pirateCove_3.png");       
 
         this.load.image("backRoom", "backRoom.png");       
         this.load.image("kitchen", "kitchen.png");      
@@ -46,9 +49,13 @@ class Load extends Phaser.Scene {
         this.load.image("camMap", "camMap.png");
 
         // load animatronic images
-        this.load.image("dylanSprite", "dylan.png");
+        this.load.image("dylanSprite", "dylan_new.png");
         this.load.image("bernardSprite", "jade.png");
-        this.load.image("phaserSprite", "phaserPlaceholder.jpg");
+
+        this.load.image("phaserSprite", "phaser_new.png");
+        this.load.image("phaserBlackoutSprite", "phaser_blackout1.png");
+        this.load.image("phaserBlackoutJumpscareSprite", "phaser_blackoutJumpscare.png");
+
         this.load.image("rushSprite1", "rushPhase1.png");
         this.load.image("rushSprite2", "rushPhase2.png");
         this.load.image("rushSprite3", "rushPhase3.png");

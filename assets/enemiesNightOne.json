@@ -1,25 +1,31 @@
 {
        "Dylan": {
             "name": "Dyan",
-            "level": 1,
+            "level": 0,
             "camera": false,
             "movement": [
-                ["mainStage", "backRoom", "mainRoom", "hallway_right", "hallwayCorner_right"],
-                ["mainStage", "backRoom", "mainRoom", "hallway_right", "hallwayCorner_right"]
+                ["mainStage", "kitchen", "mainRoom", "hallway_right", "hallwayCorner_right"],
+                ["mainStage", "kitchen", "mainRoom", "hallway_right", "hallwayCorner_right"]
             ],
-            "x": 1250,
+            "x": 2100,
             "y": 540,
-            "coordinates": [[[1160, 540, 1],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]],
+            "coordinates": [
+                [[1250, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], 
+                [[1250, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]
+            ],
             "sprite": "dylanSprite"
         },
+
+
         "Bernard": {
+            "name": "Bernard",
             "level": 0,
             "camera": false,
             "movement": [
                 ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"],
                 ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"]
             ],
-            "x": 760,
+            "x": -200,
             "y":540,
             "coordinates": [
                 [[760, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],
@@ -27,6 +33,8 @@
             ],
             "sprite": "bernardSprite"
         },
+
+
         "Phaser": {
             "level": 0,
             "camera": true,
@@ -37,11 +45,13 @@
             "x": 960,
             "y":540,
             "coordinates": [
-                [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],
-                [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]
+                [[980, 790, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],
+                [[980, 790, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]
             ],
             "sprite": "phaserSprite"
         },
+
+
         "Rush": {
             "level": 0,
             "camera": true,
@@ -49,8 +59,8 @@
                 ["pirateCove"],
                 ["pirateCove"]
             ],
-            "x": 0,
-            "y":0,
+            "x": -300,
+            "y":540,
              "coordinates": [
                 [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],
                 [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]

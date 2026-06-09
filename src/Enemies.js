@@ -14,7 +14,6 @@ class Enemies extends Phaser.GameObjects.Sprite{
         this.attackState = false; //If the enemy is about to attack
         this.justMoved = false; //If the enemy just succeeded a movemenet opportunity
         this.coordinates = coordinates[this.chosenMoveArray];//Camera coordinates for the chosen movement array
-  
 
         this.coveLevel = 0;//Pirate cove enemys phase level
 
@@ -26,7 +25,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         //this.enemyD = scene.cache.json.get('');//Json holding all enemy data 
     }
 
-    moveEnemy(inCam, doorIsClosed){
+    moveEnemy(inCam, doorIsClosed, shiftPos){
         //Get random number between 1-10 to check against AI level
         let movementOpportunity = Math.floor(Math.random()*20) + 1;
         //If the enemy can be camera stalled and player isn't in cams
@@ -35,7 +34,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
             //If the enemy AI level is greater than or equal to the movementOpportunity it gets to move
             if(this.level >= movementOpportunity){
                 //If enemy is in it's final position set it up to attack
-                if(this.position == this.movement[this.movement.length-1]){this.attackPrep(doorIsClosed);}
+                if(this.position == this.movement[this.movement.length-1]) {this.attackPrep(doorIsClosed, shiftPos);}
                 //Else increase current position index by 1 and set the position to movement at index
                 else{
                     this.index++;
@@ -48,7 +47,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         return false;
     }
 
-    attackPrep(doorIsClosed){
+    attackPrep(doorIsClosed, shiftPos){
         //Get Enemy ready to attack at next chance
         // if enemy is ready to kill, place at respective door
         if(this.attackState == false) {
@@ -63,17 +62,37 @@ class Enemies extends Phaser.GameObjects.Sprite{
         else { // otherwise, kill time
             if(doorIsClosed == true) {
                 this.index = 0;
+                this.coveLevel = 0;
                 this.position = this.movement[this.index];
                 this.attackState = false;
             }
             else{
                 console.log("you're dead :)");
-                this.scene.scene.start("loseScene");
+
+                this.depth = 999;
+                this.scale = 5;
+                this.x = 960 + shiftPos;
+                this.y = 2060;
+                let shakeIntensity = 150;
+
+                this.scene.tweens.add({
+                    targets: this,
+                    x: this.x + shakeIntensity,
+                    y: this.y + shakeIntensity,
+                    duration: 25,           // Very fast movements (50ms)
+                    ease: 'Sine.easeInOut',
+                    yoyo: true,             // Move back to origin
+                    repeat: 10,             // Number of shakes
+                    onComplete: () => {
+                        // send to lose screen
+                        this.scene.scene.start("loseScene");                    }
+                });
+
             }
         }
     }
 
-    coveMove(inCam, doorIsClosed){
+    coveMove(doorIsClosed, inCam, shiftPos){
         //Get random number between 1-10 to check against AI level
         let movementOpportunity = Math.floor(Math.random()*20) + 1;
         if(this.level >= movementOpportunity){
@@ -81,7 +100,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
                 //set level to max so that "running occurs and Rush takes every movement to get to office
                 this.level = 20;
                 //If enemy is in it's final position set it up to attack
-                if(this.position == this.movement[this.movement.length-1]){this.attackPrep(doorIsClosed);}
+                if(this.position == this.movement[this.movement.length-1]) { this.attackPrep(doorIsClosed, shiftPos); }
                 //Else increase current position index by 1 and set the position to movement at index
                 else{
                     this.index++;
