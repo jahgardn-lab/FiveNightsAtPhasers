@@ -6,6 +6,9 @@ class Load extends Phaser.Scene {
     preload() {
         this.load.setPath("./assets/");
 
+        // load lose scene
+        this.load.image("loseScene", "LoseScene.png");
+
         // load camera button
         this.load.image("cameraButton", "cameraButton.png");
         // camera location buttons
@@ -48,7 +51,11 @@ class Load extends Phaser.Scene {
         // load animatronic images
         this.load.image("dylanSprite", "dylan_new.png");
         this.load.image("bernardSprite", "jade.png");
+
         this.load.image("phaserSprite", "phaser_new.png");
+        this.load.image("phaserBlackoutSprite", "phaser_blackout1.png");
+        this.load.image("phaserBlackoutJumpscareSprite", "phaser_blackoutJumpscare.png");
+
         this.load.image("rushSprite1", "rushPhase1.png");
         this.load.image("rushSprite2", "rushPhase2.png");
         this.load.image("rushSprite3", "rushPhase3.png");
