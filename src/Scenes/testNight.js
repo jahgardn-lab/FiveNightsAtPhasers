@@ -57,25 +57,25 @@ class TestNight extends Phaser.Scene {
                 // because of this, the door is considered closed the second the player clicks.
                 // if we want to be mean to the player, we could put door is closed inside the tween onComplete
                 // so the door has to be fully closed to count (but that feels pretty mean)
-                this.leftDoorClosed = true;
+                
                 this.doorLeftIsMoving = true;
                 this.tweens.add({
                     targets: my.sprite.doorLeft,
                     y: 540,
                     duration: 500, // Duration in milliseconds
                     ease: 'Power1', // Easing function
-                    onComplete: () => { this.doorLeftIsMoving = false; }
+                    onComplete: () => { this.doorLeftIsMoving = false; this.leftDoorClosed = true; }
                 });
             } else if(this.leftDoorClosed && !this.doorLeftIsMoving) {
                 my.sprite.doorButtonLeft.setTexture("doorButton_open");
-                this.leftDoorClosed = false;
+                
                 this.doorLeftIsMoving = true;
                 this.tweens.add({
                     targets: my.sprite.doorLeft,
                     y: -500,
                     duration: 1000, // Duration in milliseconds
                     ease: 'Power1', // Easing function
-                    onComplete: () => { this.doorLeftIsMoving = false; }
+                    onComplete: () => { this.doorLeftIsMoving = false; this.leftDoorClosed = false; }
                 });
             }
         });
@@ -369,26 +369,32 @@ class TestNight extends Phaser.Scene {
             if(my.sprite.rush.attackState == false) { my.sprite.rush.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
             // bernard timer, currently every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
-                my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
+                my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed, this.shiftPos);
                 this.bernardTimer = 4.0;
             } else { this.bernardTimer -= dTime; }
 
             // phaser timer, currently every second (for offset, set initial value of timer higher)
             if(this.phaserTimer <= 0) {
-                my.sprite.phaser.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
+                my.sprite.phaser.moveEnemy(this.camsAreOpen, this.leftDoorClosed, this.shiftPos);
                 this.phaserTimer = 4.0;
             } else { this.phaserTimer -= dTime; }
 
             // dylan timer, currently every second (for offset, set initial value of timer higher)
             if(this.dylanTimer <= 0) {
-                my.sprite.dylan.moveEnemy(this.camsAreOpen, this.rightDoorClosed);
+                my.sprite.dylan.moveEnemy(this.camsAreOpen, this.rightDoorClosed, this.shiftPos);
                 this.dylanTimer = 4.0;
             } else { this.dylanTimer -= dTime; }
 
             // rush timer, currently every second (for offset, set initial value of timer higher)
             if(this.rushTimer <= 0) {
-                my.sprite.rush.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
-                this.rushTimer = 4.0;
+                let didFoxyMove = my.sprite.rush.coveMove(this.leftDoorClosed, this.camsAreOpen, this.shiftPos);
+                if(didFoxyMove == true) {
+                    let rushSpriteIndex = my.sprite.rush.coveLevel + 1;
+                    if(rushSpriteIndex < 6) { my.sprite.rush.setTexture("rushSprite" + rushSpriteIndex); }
+                                       else { my.sprite.rush.setTexture("rushSprite5"); }
+                }
+
+                this.rushTimer = 2.0;
             } else { this.rushTimer -= dTime; }
 
 
