@@ -62,6 +62,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         else { // otherwise, kill time
             if(doorIsClosed == true) {
                 this.index = 0;
+                this.coveLevel = 0;
                 this.position = this.movement[this.index];
                 this.attackState = false;
             }
