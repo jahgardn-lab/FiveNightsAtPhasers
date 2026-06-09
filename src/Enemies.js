@@ -21,6 +21,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         //TODO
         this.doorPosX = x;//Dylan wtf do these variables do please leave a comment
         this.doorPosY = y;
+        // they set where the animatronic stands when they are in the door state. since their default position is almost immediatly overwritten by update, I used the sprite's starting position to determine where they would stand for attacking the door. However, I haven't check what you've changed, so perhaps this is antiquated.
 
         //this.enemyD = scene.cache.json.get('');//Json holding all enemy data 
     }
@@ -123,7 +124,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
             this.y = this.coordinates[this.index][1];
             this.setScale(this.coordinates[this.index][2]);
            //TODO
-            this.depth = 1;//what is this for Dylan?
+            this.depth = 1;//what is this for Dylan? it was to make the animatronics appear at correct camera depth. The way the "at the door" mechanic worked is when the animatronic was at the door, this update function would stop firing, and the enemy's depth (ie where they appear in sprite layering) would be set to the back. That way, they would appear behind the door, the office, and whatnot. Then, when update started firing again, the enemy's depth would get reset to being good for the cameras
             this.visible = true;
         } else {this.visible = false;}
 

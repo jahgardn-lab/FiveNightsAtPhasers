@@ -30,9 +30,9 @@ class TestNight extends Phaser.Scene {
     create() {
         // access var that lets us read the room data
         this.roomD = this.cache.json.get('roomData');
-        this.enemyInfo = this.cache.json.get('enemiesNight1');
+        this.enemyD = this.cache.json.get('enemiesNight1');
 
-        let enemy = this.enemyInfo;
+        let enemy = this.enemyD;
 
         // place left door on left side of screen
         my.sprite.doorLeft = this.add.sprite(960, -500, "door").setScale(1);
@@ -137,10 +137,14 @@ class TestNight extends Phaser.Scene {
         this.bernardTimer = 1.0;
 
         my.sprite.phaser = new Enemies(this, enemy.Phaser.level, enemy.Phaser.camera, enemy.Phaser.movement, enemy.Phaser.x, enemy.Phaser.y, enemy.Phaser.coordinates, enemy.Phaser.sprite);
+        this.phaserTimer = 1.25;
 
-        my.sprite.dylan = new Enemies(this, enemy.Dylan.level, enemy.Dylan.camera, enemy.Dylan.movement, enemy.Dylan.x, enemy.Dylan.y, enemy.Dylan.coordinates, enemy.Dylan.sprite);
+        my.sprite.dylan = new Enemies(this, enemy.Dylan.level, enemy.Dylan.camera, enemy.Dylan.movement, this.enemyD.Dylan.x, enemy.Dylan.y, enemy.Dylan.coordinates, enemy.Dylan.sprite);
+        this.dylanTimer = 1.5;
 
         my.sprite.rush = new Enemies(this, enemy.Rush.level, enemy.Rush.camera, enemy.Rush.movement, enemy.Rush.x, enemy.Rush.y, enemy.Rush.coordinates, enemy.Rush.sprite);
+        this.rushTimer = 1.75;
+        
         // testing accessing enemy stuff
         //let bernardTest = my.sprite.bernard.movement[3];
         //let bernardTest = "leftHallway";
@@ -153,9 +157,11 @@ class TestNight extends Phaser.Scene {
         my.sprite.camFilter = this.add.sprite(game.config.width/2, game.config.height/2, "cameraFilter").setAlpha(0.1).setVisible(false);
         my.sprite.camFilter.depth = 2;
         my.sprite.camMap = this.add.sprite(game.config.width/2, game.config.height/2, "camMap").setScale(1.1).setVisible(false);
+        my.sprite.camMap.depth = 2;
 
         // place camera button at bottom of screen
         my.sprite.camButton = this.add.sprite(960, 1000, "cameraButton").setScale(1.5, 0.5).setAlpha(0.3);
+        my.sprite.camButton.depth = 2;
 
         // CAMERA BUTTONS //////////////////////////////////////////////////////////////////////
 
@@ -168,6 +174,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for left hallway corner
         let camButton_leftHallwayCorner = this.createCamButton(1550, 900, "roomButton", 0.4);
+        camButton_leftHallwayCorner.depth = 2;
         // listener for camera button getting clicked
         camButton_leftHallwayCorner.on('pointerdown', function (pointer) {
             // pointer.x and pointer.y gives coordinates of the click
@@ -179,6 +186,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_rightHallwayCorner = this.createCamButton(1700, 900, "roomButton", 0.4);
+        camButton_rightHallwayCorner.depth = 2;
         // listener for camera button getting clicked
         camButton_rightHallwayCorner.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -189,6 +197,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for left hallway
         let camButton_leftHallway = this.createCamButton(1550, 800, "roomButton", 0.4);
+        camButton_leftHallway.depth = 2;
         // listener for camera button getting clicked
         camButton_leftHallway.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -199,6 +208,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_rightHallway = this.createCamButton(1700, 800, "roomButton", 0.4);
+        camButton_rightHallway.depth = 2;
         // listener for camera button getting clicked
         camButton_rightHallway.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -209,6 +219,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_goldenFreddyCloset = this.createCamButton(1400, 750, "roomButton", 0.4);
+        camButton_goldenFreddyCloset.depth = 2;
         // listener for camera button getting clicked
         camButton_goldenFreddyCloset.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -219,6 +230,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_arcade = this.createCamButton(1850, 750, "roomButton", 0.4);
+        camButton_arcade.depth = 2;
         // listener for camera button getting clicked
         camButton_arcade.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -229,6 +241,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_pirateCove = this.createCamButton(1500, 650, "roomButton", 0.4);
+        camButton_pirateCove.depth = 2;
         // listener for camera button getting clicked
         camButton_pirateCove.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -239,6 +252,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_backroom = this.createCamButton(1400, 550, "roomButton", 0.4);
+        camButton_backroom.depth = 2;
         // listener for camera button getting clicked
         camButton_backroom.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -249,6 +263,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_kitchen = this.createCamButton(1860, 550, "roomButton", 0.4);
+        camButton_kitchen.depth = 2;
         // listener for camera button getting clicked
         camButton_kitchen.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -259,6 +274,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_mainHall = this.createCamButton(1600, 550, "roomButton", 0.4);
+        camButton_mainHall.depth = 2;
         // listener for camera button getting clicked
         camButton_mainHall.on('pointerdown', function (pointer) {
             my.sprite.activeCam.setTexture("roomButton");
@@ -269,6 +285,7 @@ class TestNight extends Phaser.Scene {
 
         // camera button for right hallway
         let camButton_mainStage = this.createCamButton(1650, 450, "roomButton_active", 0.4);
+        camButton_mainStage.depth = 2;
         my.sprite.activeCam = camButton_mainStage;
         // listener for camera button getting clicked
         camButton_mainStage.on('pointerdown', function (pointer) {
@@ -354,11 +371,30 @@ class TestNight extends Phaser.Scene {
             if(my.sprite.phaser.attackState == false) { my.sprite.phaser.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
             if(my.sprite.dylan.attackState == false) { my.sprite.dylan.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
             if(my.sprite.rush.attackState == false) { my.sprite.rush.update(this.cameras.main, my.sprite.curCam, elapsedMinutes, this.shiftPos);}
-            // every second (for offset, set initial value of timer higher)
+            // bernard timer, currently every second (for offset, set initial value of timer higher)
             if(this.bernardTimer <= 0) {
                 my.sprite.bernard.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
                 this.bernardTimer = 1.0;
             } else { this.bernardTimer -= dTime; }
+
+            // phaser timer, currently every second (for offset, set initial value of timer higher)
+            if(this.phaserTimer <= 0) {
+                my.sprite.phaser.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
+                this.phaserTimer = 1.0;
+            } else { this.phaserTimer -= dTime; }
+
+            // dylan timer, currently every second (for offset, set initial value of timer higher)
+            if(this.dylanTimer <= 0) {
+                my.sprite.dylan.moveEnemy(this.camsAreOpen, this.rightDoorClosed);
+                this.dylanTimer = 1.0;
+            } else { this.dylanTimer -= dTime; }
+
+            // rush timer, currently every second (for offset, set initial value of timer higher)
+            if(this.rushTimer <= 0) {
+                my.sprite.rush.moveEnemy(this.camsAreOpen, this.leftDoorClosed);
+                this.rushTimer = 1.0;
+            } else { this.rushTimer -= dTime; }
+
 
             // TIMER STUFF /////////////////////////////////////////////////////////////////////////
 
@@ -369,7 +405,7 @@ class TestNight extends Phaser.Scene {
             // real game timer (no seconds)
             // if at hour 0, make timer say 12
             if(elapsedMinutes == 0) {this.clockText.setText("12:00"); }
-            else {this.clockText.setText(" " + elapsedMinutes + ":00"); }
+                               else {this.clockText.setText(" " + elapsedMinutes + ":00"); }
             */
             
             // real game timer (yes seconds)
