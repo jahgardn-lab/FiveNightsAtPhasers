@@ -22,7 +22,17 @@ class Enemies extends Phaser.GameObjects.Sprite{
         this.doorPosY = y;
         // they set where the animatronic stands when they are in the door state. since their default position is almost immediatly overwritten by update, I used the sprite's starting position to determine where they would stand for attacking the door. However, I haven't check what you've changed, so perhaps this is antiquated.
 
-        //this.enemyD = scene.cache.json.get('');//Json holding all enemy data 
+        //this.enemyD = scene.cache.json.get('');//Json holding all enemy data
+
+        this.enemyKnock = this.scene.sound.add('knock', {
+            volume: 0.5,
+            loop: false
+        });
+
+        this.jumpscare = this.scene.sound.add('jumpscare', {
+            volume: 0.5,
+            loop: false
+        });
     }
 
     moveEnemy(inCam, doorIsClosed, shiftPos){
@@ -64,6 +74,13 @@ class Enemies extends Phaser.GameObjects.Sprite{
                 this.index = 0;
                 this.coveLevel = 0;
                 this.position = this.movement[this.index];
+
+                // if farther to the right of the screen, set audio pan to right
+                if(this.doorPosX > 960) { this.enemyKnock.pan = 0.5; }
+                else { this.enemyKnock.pan = -0.5; }
+                this.enemyKnock.play();
+
+
                 this.attackState = false;
             }
             else{
@@ -73,21 +90,46 @@ class Enemies extends Phaser.GameObjects.Sprite{
                 this.scale = 5;
                 this.x = 960 + shiftPos;
                 this.y = 2060;
-                let shakeIntensity = 150;
+                let shakeIntensity = 200;
+
+                this.jumpscare.play();
+
+                let shakeTimeX = Phaser.Math.Between(15, 35);
+                let shakeTimeY = Phaser.Math.Between(15, 35);
 
                 this.scene.tweens.add({
-                    targets: this,
-                    x: this.x + shakeIntensity,
-                    y: this.y + shakeIntensity,
-                    duration: 25,           // Very fast movements (50ms)
+                    targets: my.sprite.phaser,
+                    x: my.sprite.phaser.x + shakeIntensity,
+                    //y: my.sprite.phaser.y + shakeIntensity,
+                    duration: shakeTimeX,           // Very fast movements (50ms)
                     ease: 'Sine.easeInOut',
+                    //ease: 'Bounce',
                     yoyo: true,             // Move back to origin
-                    repeat: 10,             // Number of shakes
+                    repeat: 15,             // Number of shakes
                     onComplete: () => {
                         // send to lose screen
-                        this.scene.scene.start("loseScene");                    }
+                        this.jumpscare.stop();
+                        this.scene.backgroundAmbience.stop();
+                        this.scene.scene.start("loseScene");
+                    }
                 });
 
+                this.scene.tweens.add({
+                    targets: my.sprite.phaser,
+                    //x: my.sprite.phaser.x + shakeIntensity,
+                    y: my.sprite.phaser.y + shakeIntensity,
+                    duration: shakeTimeY,           // Very fast movements (50ms)
+                    ease: 'Sine.easeInOut',
+                    //ease: 'Bounce',
+                    yoyo: true,             // Move back to origin
+                    repeat: 15,             // Number of shakes
+                    onComplete: () => {
+                        // send to lose screen
+                        this.jumpscare.stop();
+                        this.scene.backgroundAmbience.stop();
+                        this.scene.scene.start("loseScene");                    
+                    }
+                });
             }
         }
     }

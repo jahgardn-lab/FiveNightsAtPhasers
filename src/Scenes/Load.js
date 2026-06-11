@@ -6,8 +6,35 @@ class Load extends Phaser.Scene {
     preload() {
         this.load.setPath("./assets/");
 
+        // AUDIO //
+
+        // background Ambience
+        this.load.audio("ambience", "ES_Ambience, Room Tone, Quiet Hotel Room, Morning - Epidemic Sound.mp3");
+        // enemy knocking sound
+        this.load.audio("knock", "ES_Doors, Knock, Metal Garage Door, Knocking 03 - Epidemic Sound.mp3");
+        // door slam sound
+        this.load.audio("doorClose", "ES_Doors, Metal, Garage, Aggressive, Slam - Epidemic Sound.mp3");
+        // ui sound
+        this.load.audio("button", "ES_User Interface, Click, UI Buttons, Bubbly, Option - Epidemic Sound.mp3");
+        // camera open/close sound
+        this.load.audio("cameraSwitch", "cameraSwitch.mp3");
+        // win sound
+        this.load.audio("nightOver", "nightOver.mp3");
+        // horrible jumpscare sound
+        this.load.audio("jumpscare", "horribleSound.mp3");
+        // spooky powerOut ambience
+        this.load.audio("spookyAmbience", "ES_Ambience, Scifi, Space Atmosphere, Dark, Creepy, Resonant - Epidemic Sound.mp3");
+
+        // IMAGES //
+
+        // load confetti image
+        this.load.image("confetti", "confetti.png");
+
         // load lose scene
         this.load.image("loseScene", "LoseScene.png");
+
+        // load win scene image
+        this.load.image("winScene", "winSceneBlackBars.png");
 
         // load camera button
         this.load.image("cameraButton", "cameraButton.png");
@@ -78,7 +105,7 @@ class Load extends Phaser.Scene {
 
 
          // ...and pass to the next Scene
-         this.scene.start("testNightScene");
+         this.scene.start("mainMenuScene");
     }
 
     // Never get here since a new scene is started in create()

@@ -29,7 +29,7 @@ class LoseScene extends Phaser.Scene {
     update() {
 
     if(this.spaceKey.isDown) {
-        this.scene.start("testNightScene");
+        this.scene.start("mainMenuScene");
     }
  
     }

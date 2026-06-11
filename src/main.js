@@ -29,7 +29,7 @@ let config = {
     },
     width: 1920,
     height: 1080,
-    scene: [Load, TestNight, WinScene, LoseScene]
+    scene: [Load, TestNight, WinScene, LoseScene, MainMenu]
 }
 
 

@@ -42,8 +42,8 @@
                 ["mainStage", "backRoom", "mainRoom", "hallway", "hallwayCorner"],
                 ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"]
             ],
-            "x": 960,
-            "y":540,
+            "x": -100,
+            "y":940,
             "coordinates": [
                 [[980, 790, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],
                 [[980, 790, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]
