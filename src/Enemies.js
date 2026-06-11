@@ -97,6 +97,8 @@ class Enemies extends Phaser.GameObjects.Sprite{
         let movementOpportunity = Math.floor(Math.random()*20) + 1;
         if(this.level >= movementOpportunity){
             if(this.coveLevel >= 5){
+                //set level to max so that "running occurs and Rush takes every movement to get to office
+                this.level = 20;
                 //If enemy is in it's final position set it up to attack
                 if(this.position == this.movement[this.movement.length-1]) { this.attackPrep(doorIsClosed, shiftPos); }
                 //Else increase current position index by 1 and set the position to movement at index
@@ -120,6 +122,8 @@ class Enemies extends Phaser.GameObjects.Sprite{
     positionReturn(){return this.position;}
     attackStateReturn(){return this.attackState;}
     coveLevelReturn(){return this.coveLevel;}
+
+    resetLevel(level){this.level = level;}
 
     update(cam, curCam, time, shiftPos){
         // NOTE: shift pos is the current camera movement offset (sent from main night script)
@@ -146,6 +150,8 @@ class Enemies extends Phaser.GameObjects.Sprite{
         //if enemy is in office/attack state hide them 
         if(this.attackState == true){this.visible = false;}
 
+        if(this.camera && this.movement[0] == "pirateCove" && this.coveLevel==0){this.visible = false;}
+    
         //at certain times increase level by number
         if(time == 2 && this.hasIncreased == 0){this.level += 2; this.hasIncreased += 1;}
         if(time == 4 && this.hasIncreased == 1){this.level += 1; this.hasIncreased += 1;}

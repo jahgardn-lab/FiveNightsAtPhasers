@@ -36,7 +36,6 @@
 
 
         "Phaser": {
-            "name": "Phaser",
             "level": 0,
             "camera": true,
             "movement": [
@@ -54,7 +53,6 @@
 
 
         "Rush": {
-            "name": "Rush",
             "level": 0,
             "camera": true,
             "movement": [
