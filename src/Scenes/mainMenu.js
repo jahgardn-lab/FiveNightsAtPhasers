@@ -24,11 +24,29 @@ class MainMenu extends Phaser.Scene {
 
         // creates clickable to night 1
         this.night1Txt = this.add.text(50, 540, "NIGHT 1", { font: '72px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive();
-        this.night1Txt.on('pointerdown', (pointer) => {
-            this.scene.start("testNightScene");
+        this.night1Txt.on('pointerdown', (pointer) => {   this.scene.start("testNightScene");   });
+
+        
+        // credits for game
+        this.creditsTXT = this.add.text(50, 1020, "Credits", { font: '32px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive();
+        this.creditsBackTXT = this.add.text(50, 1020, "Back", { font: '32px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive().setVisible(false);
+        this.creditsContentTXT = this.add.text(50, 300, "Co-created by Jasmine Gardner & Dylan McDermott", { font: '64px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setVisible(false);
+
+        this.creditsTXT.on('pointerdown', (pointer) => {
+            this.creditsTXT.setVisible(false);
+            this.creditsBackTXT.setVisible(true);
+            this.creditsContentTXT.setVisible(true);
+
+            this.night1Txt.setVisible(false);
         });
 
+        this.creditsBackTXT.on('pointerdown', (pointer) => {
+            this.creditsTXT.setVisible(true);
+            this.creditsBackTXT.setVisible(false);
+            this.creditsContentTXT.setVisible(false);
 
+            this.night1Txt.setVisible(true);
+        });
 
         // space key listener
         //this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
