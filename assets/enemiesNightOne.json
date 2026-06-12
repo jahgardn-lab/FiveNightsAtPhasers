@@ -4,14 +4,14 @@
             "level": 0,
             "camera": false,
             "movement": [
-                ["mainStage", "kitchen", "mainRoom", "hallway_right", "hallwayCorner_right"],
-                ["mainStage", "kitchen", "mainRoom", "hallway_right", "hallwayCorner_right"]
+                ["mainStage", "mainRoom", "kitchen", "arcade", "hallway_right", "hallwayCorner_right"],
+                ["mainStage", "mainRoom", "kitchen", "arcade", "hallway_right", "hallwayCorner_right"]
             ],
             "x": 2100,
             "y": 540,
             "coordinates": [
-                [[1250, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]], 
-                [[1250, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]
+                [[1250, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5], [960, 540, 0.5]], 
+                [[1250, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5], [960, 540, 0.5]]
             ],
             "sprite": "dylanSprite"
         },
@@ -22,25 +22,25 @@
             "level": 0,
             "camera": false,
             "movement": [
-                ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"],
-                ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"]
+                ["mainStage", "mainRoom", "backRoom", "mainRoom",  "hallway_left", "hallwayCorner_left"],
+                ["mainStage", "mainRoom", "backRoom", "mainRoom",  "hallway_left", "hallwayCorner_left"]
             ],
             "x": -200,
             "y":540,
             "coordinates": [
-                [[760, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],
-                [[760, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]
+                [[760, 540, 0.5],[1450, 330, 0.2],[1200, 600, 0.4],[360, 700, 0.75],[960, 540, 0.3],[960, 600, 0.75]],
+                [[760, 540, 0.5],[1450, 330, 0.2],[1200, 600, 0.4],[360, 700, 0.75],[960, 540, 0.3],[960, 600, 0.75]]
             ],
             "sprite": "bernardSprite"
         },
 
 
         "Phaser": {
-            "level": 0,
+            "level": -1,
             "camera": true,
             "movement": [
-                ["mainStage", "backRoom", "mainRoom", "hallway", "hallwayCorner"],
-                ["mainStage", "backRoom", "mainRoom", "hallway_left", "hallwayCorner_left"]
+                ["mainStage", "mainRoom", "backRoom", "goldenFreddyCloset", "hallway_left", "hallwayCorner_left"],
+                ["mainStage", "mainRoom", "mainRoom", "arcade", "hallway_right", "hallwayCorner_right"]
             ],
             "x": -100,
             "y":940,
@@ -56,14 +56,14 @@
             "level": 0,
             "camera": true,
             "movement": [
-                ["pirateCove"],
-                ["pirateCove"]
+                ["pirateCove", "hallway_left", "hallwayCorner_left"],
+                ["pirateCove", "hallway_left", "hallwayCorner_left"]
             ],
             "x": -300,
             "y":540,
              "coordinates": [
-                [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]],
-                [[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5],[960, 540, 0.5]]
+                [[960, 540, 0.5],[960, 540, 0.3],[960, 600, 0.75]],
+                [[960, 540, 0.5],[960, 540, 0.3],[960, 600, 0.75]]
             ],
             "sprite": "rushSprite1"
         }

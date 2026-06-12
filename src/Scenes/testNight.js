@@ -180,7 +180,7 @@ class TestNight extends Phaser.Scene {
         my.sprite.phaser = new Enemies(this, enemy.Phaser.level, enemy.Phaser.camera, enemy.Phaser.movement, enemy.Phaser.x, enemy.Phaser.y, enemy.Phaser.coordinates, enemy.Phaser.sprite);
         this.phaserTimer = 2.0;
 
-        my.sprite.dylan = new Enemies(this, enemy.Dylan.level, enemy.Dylan.camera, enemy.Dylan.movement, this.enemyD.Dylan.x, enemy.Dylan.y, enemy.Dylan.coordinates, enemy.Dylan.sprite);
+        my.sprite.dylan = new Enemies(this, enemy.Dylan.level, enemy.Dylan.camera, enemy.Dylan.movement, enemy.Dylan.x, enemy.Dylan.y, enemy.Dylan.coordinates, enemy.Dylan.sprite);
         this.dylanTimer = 3.0;
 
         my.sprite.rush = new Enemies(this, enemy.Rush.level, enemy.Rush.camera, enemy.Rush.movement, enemy.Rush.x, enemy.Rush.y, enemy.Rush.coordinates, enemy.Rush.sprite);

@@ -1,7 +1,7 @@
 {
        "Dylan": {
             "name": "Dyan",
-            "level": 2,
+            "level": 5,
             "camera": false,
             "movement": [
                 ["mainStage", "mainRoom", "kitchen", "arcade", "hallway_right", "hallwayCorner_right"],
@@ -19,7 +19,7 @@
 
         "Bernard": {
             "name": "Bernard",
-            "level": 2,
+            "level": 5,
             "camera": false,
             "movement": [
                 ["mainStage", "mainRoom", "backRoom", "mainRoom",  "hallway_left", "hallwayCorner_left"],
@@ -36,7 +36,7 @@
 
 
         "Phaser": {
-            "level": 1,
+            "level": 2,
             "camera": true,
             "movement": [
                 ["mainStage", "mainRoom", "backRoom", "goldenFreddyCloset", "hallway_left", "hallwayCorner_left"],
