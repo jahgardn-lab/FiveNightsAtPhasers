@@ -149,6 +149,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
                     this.position = this.movement[this.index];
                 }
             }
+            //increase coveLevel is player isnt in cams
             else if(!inCam){this.coveLevel++;}
             this.justMoved = true;
             return true;
