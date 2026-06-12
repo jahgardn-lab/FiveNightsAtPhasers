@@ -92,6 +92,8 @@ class Load extends Phaser.Scene {
         // load rooms json file
         this.load.json('roomData', 'roomData.json');
         this.load.json("enemiesNight1", "enemiesNightOne.json");
+        this.load.json("enemiesNight2", "enemiesNightTwo.json");
+        this.load.json("enemiesNight3", "enemiesNightThree.json");
     }
 
     create() {

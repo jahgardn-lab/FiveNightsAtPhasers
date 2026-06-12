@@ -30,7 +30,7 @@ class MainMenu extends Phaser.Scene {
         // credits for game
         this.creditsTXT = this.add.text(50, 1020, "Credits", { font: '32px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive();
         this.creditsBackTXT = this.add.text(50, 1020, "Back", { font: '32px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive().setVisible(false);
-        this.creditsContentTXT = this.add.text(50, 300, "Co-created by Jasmine Gardner & Dylan McDermott", { font: '64px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setVisible(false);
+        this.creditsContentTXT = this.add.text(50, 300, "Co-created by Jade Gardner & Dylan McDermott", { font: '64px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setVisible(false);
 
         this.creditsTXT.on('pointerdown', (pointer) => {
             this.creditsTXT.setVisible(false);
