@@ -1,6 +1,6 @@
-class TestNight extends Phaser.Scene {
+class NightTwo extends Phaser.Scene {
     constructor() {
-        super("testNightScene");
+        super("nightTwo");
     }
 
     preload() {
@@ -68,7 +68,7 @@ class TestNight extends Phaser.Scene {
 
         // access var that lets us read the room data
         this.roomD = this.cache.json.get('roomData');
-        this.enemyD = this.cache.json.get('enemiesNight1');
+        this.enemyD = this.cache.json.get('enemiesNight2');
 
         let enemy = this.enemyD;
 
@@ -353,7 +353,7 @@ class TestNight extends Phaser.Scene {
         this.clockText = this.add.text(1880, 80, "12:00", { font: '64px Courier', fill: '#ff0000' }).setOrigin(1, 1);
 
         // place Night Label text
-        this.nightLabel = this.add.text(1880, 140, "TEST NIGHT", { font: '48px Courier', fill: '#ff0000' }).setOrigin(1, 1);        
+        this.nightLabel = this.add.text(1880, 140, "NIGHT 2", { font: '48px Courier', fill: '#ff0000' }).setOrigin(1, 1);        
 
         // timer for the night
         this.nightTimer = this.time.addEvent({
@@ -715,7 +715,7 @@ class TestNight extends Phaser.Scene {
 
     // called when 6 AM is reached
     // can prob just use this function to load the win scene
-    hasWon() { this.HAS_WON = true; this.backgroundAmbience.stop(); this.scene.start("winScene"); localStorage.setItem("currentNight", "NIGHT 2");}
+    hasWon() { this.HAS_WON = true; this.backgroundAmbience.stop(); this.scene.start("winScene"); localStorage.setItem("currentNight", "NIGHT 3");}
 
     // creates new button sprite and adds it to buttons
     createCamButton(x, y, sprite, scale) {

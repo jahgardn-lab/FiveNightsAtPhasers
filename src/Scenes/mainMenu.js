@@ -11,7 +11,18 @@ class MainMenu extends Phaser.Scene {
     }
 
     create() {
-       
+        //create list of nights and night scence
+        this.nightList = ["NIGHT 1", "NIGHT 2", "NIGHT 3"];
+        this.nightSceneList = ["testNightScene", "nightTwo"];
+        //pull the currently saved night from local storage, as a safety net if the local storage is null set to test night
+        this.savedNight = localStorage.getItem("currentNight");
+        if(this.savedNight == null){this.savedNight == this.nightList[0]}
+
+        //Assign saved night text to cooresponding scene name, as a safety net the current scene is set to the test night
+        if(this.savedNight == this.nightList[0]){this.curSceneLoad = this.nightSceneList[0];}
+        else if(this.savedNight == this.nightList[1]){this.curSceneLoad = this.nightSceneList[1];}
+        else if(this.savedNight == this.nightList[2]){this.curSceneLoad = this.nightSceneList[2];}
+        else{this.curSceneLoad = "testNightScene";}
         // TEXT STUFF //////////////////////////////////////////////////////////////////////////
 
         // place lose text in center of screen
@@ -22,9 +33,9 @@ class MainMenu extends Phaser.Scene {
         my.sprite.camFilter = this.add.sprite(game.config.width/2, game.config.height/2, "cameraFilter").setAlpha(0.1);
 
 
-        // creates clickable to night 1
-        this.night1Txt = this.add.text(50, 540, "NIGHT 1", { font: '72px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive();
-        this.night1Txt.on('pointerdown', (pointer) => {   this.scene.start("testNightScene");   });
+        // creates clickable to saved night
+        this.nightTXT = this.add.text(50, 540, this.savedNight, { font: '72px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive();
+        this.nightTXT.on('pointerdown', (pointer) => {   this.scene.start(this.curSceneLoad);   });
 
         
         // credits for game
@@ -37,7 +48,7 @@ class MainMenu extends Phaser.Scene {
             this.creditsBackTXT.setVisible(true);
             this.creditsContentTXT.setVisible(true);
 
-            this.night1Txt.setVisible(false);
+            this.nightTXT.setVisible(false);
         });
 
         this.creditsBackTXT.on('pointerdown', (pointer) => {
@@ -45,7 +56,7 @@ class MainMenu extends Phaser.Scene {
             this.creditsBackTXT.setVisible(false);
             this.creditsContentTXT.setVisible(false);
 
-            this.night1Txt.setVisible(true);
+            this.nightTXT.setVisible(true);
         });
 
         // space key listener

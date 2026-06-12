@@ -89,7 +89,7 @@ class Load extends Phaser.Scene {
         this.load.image("rushSprite4", "rushPhase4.png");
         this.load.image("rushSprite5", "rushPhase5.png");
 
-        // load rooms json file
+        // load rooms and enemies json files
         this.load.json('roomData', 'roomData.json');
         this.load.json("enemiesNight1", "enemiesNightOne.json");
         this.load.json("enemiesNight2", "enemiesNightTwo.json");
@@ -97,20 +97,7 @@ class Load extends Phaser.Scene {
     }
 
     create() {
-
-        // access var that lets us read the room data
-        //const roomD = this.cache.json.get('roomData');
-
-        //console.log(roomD.rooms[0].connectedRooms[0]); // returns, "Office"
-        //console.log(roomD.rooms[1].connectedRooms[1]); // returns, "leftHallway"
-        //console.log(roomD.rooms[0]); // returns leftHallway room data
-
-
-         // ...and pass to the next Scene
-         this.scene.start("mainMenuScene");
-    }
-
-    // Never get here since a new scene is started in create()
-    update() {
+        // ...and pass to the next Scene
+        this.scene.start("mainMenuScene");
     }
 }
