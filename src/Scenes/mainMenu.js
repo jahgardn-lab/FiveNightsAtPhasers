@@ -13,7 +13,7 @@ class MainMenu extends Phaser.Scene {
     create() {
         //create list of nights and night scence
         this.nightList = ["NIGHT 1", "NIGHT 2", "NIGHT 3"];
-        this.nightSceneList = ["testNightScene", "nightTwo"];
+        this.nightSceneList = ["testNightScene", "nightTwo", "nightThree"];
         //pull the currently saved night from local storage, as a safety net if the local storage is null set to test night
         this.savedNight = localStorage.getItem("currentNight");
         if(this.savedNight == null){this.savedNight = this.nightList[0]} // this had a double == sign, so I deleted it and that seemed to fix things
