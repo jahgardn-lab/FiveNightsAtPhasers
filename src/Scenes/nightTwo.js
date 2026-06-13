@@ -9,7 +9,7 @@ class NightTwo extends Phaser.Scene {
     init() {
         this.HAS_WON = false;
         this.CAM_SHIFT_AMOUNT = 390;
-        this.CAM_SHIFT_SPEED = 20;
+        this.CAM_SHIFT_SPEED = 1500;
         this.MAX_POWER = 1000;
 
         this.power = 1000;
@@ -514,13 +514,13 @@ class NightTwo extends Phaser.Scene {
             // UI STUFF ////////////////////////////////////////////////////////////////////////////
 
             // offset ui to be relative to current screen scroll position
-            this.clockText.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), this.clockText.y);
-            this.nightLabel.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), this.nightLabel.y);
-            this.powerLabel.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), this.powerLabel.y);
-            my.sprite.curCam.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
-            my.sprite.camFilter.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 540);
-            my.sprite.camMap.setPosition(1625 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 680);
-            my.sprite.camButton.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger), 1000);
+            this.clockText.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger * dTime), this.clockText.y);
+            this.nightLabel.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger * dTime), this.nightLabel.y);
+            this.powerLabel.setPosition(1880 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger * dTime), this.powerLabel.y);
+            my.sprite.curCam.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger * dTime), 540);
+            my.sprite.camFilter.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger * dTime), 540);
+            my.sprite.camMap.setPosition(1625 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger * dTime), 680);
+            my.sprite.camButton.setPosition(960 + this.shiftPos + (this.CAM_SHIFT_SPEED * burger * dTime), 1000);
 
             // CAMERA BUTTONS //////////////////////////////////////////////////////////////////////
 
@@ -615,8 +615,8 @@ class NightTwo extends Phaser.Scene {
 
         // VIEW SHIFT //////////////////////////////////////////////////////////////////////////
 
-        if(burger == -1) { this.cameras.main.scrollX -= this.CAM_SHIFT_SPEED; }
-        if(burger == 1) { this.cameras.main.scrollX += this.CAM_SHIFT_SPEED; }
+        if(burger == -1) { this.cameras.main.scrollX -= this.CAM_SHIFT_SPEED * dTime; }
+        if(burger == 1) { this.cameras.main.scrollX += this.CAM_SHIFT_SPEED * dTime; }
     }
 
     // HELPER FUNCTIONS //
