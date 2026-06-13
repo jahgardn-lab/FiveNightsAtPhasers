@@ -18,15 +18,17 @@ class MainMenu extends Phaser.Scene {
         this.savedNight = localStorage.getItem("currentNight");
         if(this.savedNight == null){this.savedNight = this.nightList[0]} // this had a double == sign, so I deleted it and that seemed to fix things
 
+        this.curNightIndex = -1;
+        this.savedNightIndex = -1;
         //Assign saved night text to cooresponding scene name, as a safety net the current scene is set to the test night
-        if     (this.savedNight == this.nightList[0]){this.curSceneLoad = this.nightSceneList[0];}
-        else if(this.savedNight == this.nightList[1]){this.curSceneLoad = this.nightSceneList[1];}
-        else if(this.savedNight == this.nightList[2]){this.curSceneLoad = this.nightSceneList[2];}
-        else                                         {this.curSceneLoad = "testNightScene";}
+        if     (this.savedNight == this.nightList[0]){this.curSceneLoad = this.nightSceneList[0]; this.curNightIndex = 0; this.savedNightIndex = 0;}
+        else if(this.savedNight == this.nightList[1]){this.curSceneLoad = this.nightSceneList[1]; this.curNightIndex = 1; this.savedNightIndex = 1;}
+        else if(this.savedNight == this.nightList[2]){this.curSceneLoad = this.nightSceneList[2]; this.curNightIndex = 2; this.savedNightIndex = 2;}
+        else                                         {this.curSceneLoad = "testNightScene";       this.curNightIndex = 0; this.savedNightIndex = 0;}
         // TEXT STUFF //////////////////////////////////////////////////////////////////////////
 
-        // place lose text in center of screen
-        this.loseText = this.add.text(960, 80, "5 NIGHTS AT PHASER'S", { font: '128px Courier', fill: '#ffffff' }).setOrigin(0.5, 0.5);
+        // place title text at top of screen
+        this.titleText = this.add.text(960, 80, "5 NIGHTS AT PHASER'S", { font: '128px Courier', fill: '#ffffff' }).setOrigin(0.5, 0.5);
 
         my.sprite.phaser = this.add.sprite(1500, 2100, "phaserSprite").setScale(5).setAlpha(0);
         this.phaserFlashTimer = 2;
@@ -36,6 +38,22 @@ class MainMenu extends Phaser.Scene {
         // creates clickable to saved night
         this.nightTXT = this.add.text(50, 540, this.savedNight, { font: '72px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive();
         this.nightTXT.on('pointerdown', (pointer) => {   this.scene.start(this.curSceneLoad);   });
+
+
+        // button to reach previous nights
+        this.prevNightTXT = this.add.text(50, 500, "^", { font: '72px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setInteractive();
+        this.prevNightTXT.on('pointerdown', (pointer) => {
+            this.curNightIndex = Phaser.Math.Clamp(this.curNightIndex - 1, 0, this.savedNightIndex);
+            this.curSceneLoad = this.nightSceneList[this.curNightIndex];
+            this.nightTXT.setText(this.nightList[this.curNightIndex]);
+        });
+        // button to right next night (if unlocked)
+        this.nextNightTXT = this.add.text(50, 580, "^", { font: '72px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setFlipY(true).setInteractive();
+        this.nextNightTXT.on('pointerdown', (pointer) => {
+            this.curNightIndex = Phaser.Math.Clamp(this.curNightIndex + 1, 0, this.savedNightIndex);
+            this.curSceneLoad = this.nightSceneList[this.curNightIndex];
+            this.nightTXT.setText(this.nightList[this.curNightIndex]);
+        });
 
         
         // credits for game

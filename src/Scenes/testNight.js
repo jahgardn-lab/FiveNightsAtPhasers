@@ -353,7 +353,7 @@ class TestNight extends Phaser.Scene {
         this.clockText = this.add.text(1880, 80, "12:00", { font: '64px Courier', fill: '#ff0000' }).setOrigin(1, 1);
 
         // place Night Label text
-        this.nightLabel = this.add.text(1880, 140, "TEST NIGHT", { font: '48px Courier', fill: '#ff0000' }).setOrigin(1, 1);        
+        this.nightLabel = this.add.text(1880, 140, "NIGHT 1", { font: '48px Courier', fill: '#ff0000' }).setOrigin(1, 1);        
 
         // timer for the night
         this.nightTimer = this.time.addEvent({
