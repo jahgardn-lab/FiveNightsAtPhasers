@@ -25,6 +25,10 @@ class Load extends Phaser.Scene {
         // spooky powerOut ambience
         this.load.audio("spookyAmbience", "ES_Ambience, Scifi, Space Atmosphere, Dark, Creepy, Resonant - Epidemic Sound.mp3");
 
+        // phonecall stuff
+        this.load.audio("phonecall", "PhoneCall.mp3");
+        this.load.audio("phonecallEnd", "phoneJingle.mp3");
+
         // IMAGES //
 
         // load confetti image

@@ -84,6 +84,17 @@ class TestNight extends Phaser.Scene {
         // place office background sprite
         my.sprite.office = this.add.sprite(game.config.width/2, game.config.height/2, "office").setScale(1);
 
+
+        // PHONE STUFF//////////////////////////////////////////////////////////////////////////
+        this.callSkip = this.add.text(960, 650, "press p to skip call", { font: '48px Courier', fill: '#b7b7b7' }).setOrigin(0.5, 1).setDepth(0);  
+        this.phonecall = this.sound.add('phonecall', { volume: 0.5, rate: 1, loop: false });
+        this.phonecall.play();
+        this.phonecall.on('complete', () => { this.callSkip.setVisible(false); });
+        this.phonecallEnd = this.sound.add('phonecallEnd', { volume: 0.5, loop: false });
+        let peeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+        peeKey.on('down', (key, event) => { this.phonecall.stop(); this.phonecallEnd.play(); this.callSkip.setVisible(false); });
+
+
         // LEFT DORE STUFF /////////////////////////////////////////////////////////////////////
 
         // place left door button at left side of screen

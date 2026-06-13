@@ -11,6 +11,10 @@ class MainMenu extends Phaser.Scene {
     }
 
     create() {
+
+        // button sfx
+        this.buttonSound = this.sound.add('button', { volume: 0.5, loop: false });
+
         //create list of nights and night scence
         this.nightList = ["NIGHT 1", "NIGHT 2", "NIGHT 3"];
         this.nightSceneList = ["testNightScene", "nightTwo", "nightThree"];
@@ -46,6 +50,7 @@ class MainMenu extends Phaser.Scene {
             this.curNightIndex = Phaser.Math.Clamp(this.curNightIndex - 1, 0, this.savedNightIndex);
             this.curSceneLoad = this.nightSceneList[this.curNightIndex];
             this.nightTXT.setText(this.nightList[this.curNightIndex]);
+            this.buttonSound.play();
         });
         // button to right next night (if unlocked)
         this.nextNightTXT = this.add.text(50, 580, "^", { font: '72px Courier', fill: '#ffffff' }).setOrigin(0, 0.5).setFlipY(true).setInteractive();
@@ -53,6 +58,7 @@ class MainMenu extends Phaser.Scene {
             this.curNightIndex = Phaser.Math.Clamp(this.curNightIndex + 1, 0, this.savedNightIndex);
             this.curSceneLoad = this.nightSceneList[this.curNightIndex];
             this.nightTXT.setText(this.nightList[this.curNightIndex]);
+            this.buttonSound.play();
         });
 
         
@@ -65,7 +71,9 @@ class MainMenu extends Phaser.Scene {
             this.creditsTXT.setVisible(false);
             this.creditsBackTXT.setVisible(true);
             this.creditsContentTXT.setVisible(true);
-
+            this.prevNightTXT.setVisible(false);
+            this.nextNightTXT.setVisible(false);
+            this.buttonSound.play();
             this.nightTXT.setVisible(false);
         });
 
@@ -73,7 +81,9 @@ class MainMenu extends Phaser.Scene {
             this.creditsTXT.setVisible(true);
             this.creditsBackTXT.setVisible(false);
             this.creditsContentTXT.setVisible(false);
-
+            this.prevNightTXT.setVisible(true);
+            this.nextNightTXT.setVisible(true);
+            this.buttonSound.play();
             this.nightTXT.setVisible(true);
         });
 
