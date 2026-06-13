@@ -7,7 +7,7 @@ class Enemies extends Phaser.GameObjects.Sprite{
         this.level = level; //AI level for random movement checks, integer
         this.hasIncreased = 0;//If the AI level has increased
         this.camera = camera; //Can you camera stall the enemy, boolean
-        this.chosenMoveArray = Math.floor(Math.random()*2);
+        this.chosenMoveArray = 1//Math.floor(Math.random()*2);
         this.movement = movement[this.chosenMoveArray]; //What is this enemy's movement pattern between cameras, array
         this.index = 0; //Index of the current position
         this.position = this.movement[this.index]; //Set intial postion to first allowed room
