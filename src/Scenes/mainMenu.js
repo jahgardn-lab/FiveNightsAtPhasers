@@ -16,13 +16,13 @@ class MainMenu extends Phaser.Scene {
         this.nightSceneList = ["testNightScene", "nightTwo"];
         //pull the currently saved night from local storage, as a safety net if the local storage is null set to test night
         this.savedNight = localStorage.getItem("currentNight");
-        if(this.savedNight == null){this.savedNight == this.nightList[0]}
+        if(this.savedNight == null){this.savedNight = this.nightList[0]} // this had a double == sign, so I deleted it and that seemed to fix things
 
         //Assign saved night text to cooresponding scene name, as a safety net the current scene is set to the test night
-        if(this.savedNight == this.nightList[0]){this.curSceneLoad = this.nightSceneList[0];}
+        if     (this.savedNight == this.nightList[0]){this.curSceneLoad = this.nightSceneList[0];}
         else if(this.savedNight == this.nightList[1]){this.curSceneLoad = this.nightSceneList[1];}
         else if(this.savedNight == this.nightList[2]){this.curSceneLoad = this.nightSceneList[2];}
-        else{this.curSceneLoad = "testNightScene";}
+        else                                         {this.curSceneLoad = "testNightScene";}
         // TEXT STUFF //////////////////////////////////////////////////////////////////////////
 
         // place lose text in center of screen

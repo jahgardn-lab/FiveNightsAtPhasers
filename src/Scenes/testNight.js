@@ -445,8 +445,7 @@ class TestNight extends Phaser.Scene {
                     if(rushSpriteIndex < 6) { my.sprite.rush.setTexture("rushSprite" + rushSpriteIndex); }
                                        else { my.sprite.rush.setTexture("rushSprite5"); }
                 }
-
-                this.rushTimer = 2.0;
+                this.rushTimer = 4.0;
             } else { this.rushTimer -= dTime; }
 
 
